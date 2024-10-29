@@ -2,6 +2,8 @@
 .idea
 # Compiled class file
 *.class
+target
+dbdata
 
 # Log file
 *.log
