@@ -1,16 +1,32 @@
 server:
-  port: 8888
+  port: 80
 
 spring:
+  liquibase: enable
+
   security:
     oauth2:
       resourceserver:
-        jwt.issuer-uri: ${ISSUER_URI:http://localhost:8888/realms/myfit}
+        jwt.issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/myfit}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/app}
+    username: ${DB_USER:app}
+    password: ${DB_PASSWORD:pass}
+
+
 cors:
   url: ${CORS_URL:http://localhost:3000}
 
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
+keycloak:
+  url: http://localhost:8080
+  realm: master
+  username: admin
+  password: pw
+  client-id: admin-cli
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        security: DEBUG

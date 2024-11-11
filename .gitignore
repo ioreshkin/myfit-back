@@ -4,6 +4,10 @@
 *.class
 target
 dbdata
+appdata
+.env-app-db
+.env-keycloak
+.env-postgres
 
 # Log file
 *.log

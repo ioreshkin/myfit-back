@@ -1,0 +1,22 @@
+package center.myfit.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class ProgramWorkout extends BaseEntity {
+    private Integer order_number;
+    @ManyToOne
+    @JoinColumn(name = "program_id")
+    private Program program;
+    @ManyToOne
+    @JoinColumn(name = "workout_id")
+    private Workout workout;
+}
