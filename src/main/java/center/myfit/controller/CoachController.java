@@ -16,4 +16,9 @@ public class CoachController {
     public void follow(@PathVariable("code") Integer code) {
         userService.followCoach(code);
     }
+
+    @PostMapping("assign-program")
+    public void assignProgram(Long userId, Long programId) {
+        userService.assignProgram(userId, programId);
+    }
 }
