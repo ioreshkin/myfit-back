@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProgramWorkoutRepository extends JpaRepository<ProgramWorkout, Long> {
-    List<Program> findAllByWorkout(List<Workout> workouts);
+    List<Program> findAllByWorkoutIn(List<Workout> workouts);
 }
