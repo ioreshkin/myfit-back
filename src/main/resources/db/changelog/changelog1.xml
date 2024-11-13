@@ -58,7 +58,7 @@
     </changeSet>
     <changeSet id="create_table_coach_user" author="ilya">
         <sql>
-            CREATE TABLE program (
+            CREATE TABLE coach_user (
             id bigserial primary key,
             coach_id bigint references users(id),
             follower_id bigint references users(id),

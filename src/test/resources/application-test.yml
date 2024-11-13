@@ -1,0 +1,16 @@
+server:
+  port: 80
+
+spring:
+  liquibase: enable
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt.issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/myfit}
+
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver

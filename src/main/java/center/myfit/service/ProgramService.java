@@ -37,7 +37,7 @@ public class ProgramService {
     public List<ProgramDto> getAll() {
         User user = userAware.getUser();
         List<Workout> workouts = workoutRepository.findAllByOwner(user);
-        return programWorkoutRepository.findAllByWorkout(workouts).stream().map(this::map).toList();
+        return programWorkoutRepository.findAllByWorkoutIn(workouts).stream().map(this::map).toList();
     }
 
     private Program map(ProgramDto dto) {
