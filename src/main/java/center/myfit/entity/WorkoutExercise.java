@@ -14,6 +14,7 @@ import lombok.Setter;
 public class WorkoutExercise extends BaseEntity {
     private Integer repeats;
     private Integer sets;
+    private Integer orderNumber;
     @ManyToOne
     @JoinColumn(name = "workout_id")
     private Workout workout;

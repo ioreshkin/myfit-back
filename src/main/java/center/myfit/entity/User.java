@@ -24,6 +24,7 @@ public class User extends BaseEntity {
     private String role;
     private String email;
     private String keycloakId;
+    private Integer invite;
     @OneToMany(mappedBy = "owner")
     private List<Exercise> exercises = new ArrayList<>();
 }

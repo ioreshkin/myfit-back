@@ -12,6 +12,7 @@
                 last_name varchar not null,
                 email varchar unique not null,
                 keycloak_id varchar not null unique,
+                invite int not null unique,
                 created_at timestamp default current_timestamp,
                 updated_at timestamp default current_timestamp
             )
@@ -38,6 +39,7 @@
                 title varchar not null,
                 description text,
                 difficulty int not null,
+                owner bigint references users(id),
                 created_at timestamp default current_timestamp,
                 updated_at timestamp default current_timestamp
             )
@@ -54,6 +56,17 @@
             )
         </sql>
     </changeSet>
+    <changeSet id="create_table_coach_user" author="ilya">
+        <sql>
+            CREATE TABLE program (
+            id bigserial primary key,
+            coach_id bigint references users(id),
+            follower_id bigint references users(id),
+            created_at timestamp default current_timestamp,
+            updated_at timestamp default current_timestamp
+            )
+        </sql>
+    </changeSet>
     <changeSet id="create_table_workout_exercise" author="ilya">
         <sql>
             CREATE TABLE workout_exercise (
@@ -62,6 +75,7 @@
                 exercise_id bigint references exercise(id),
                 repeats int not null,
                 sets int not null,
+                order_number int not null,
                 created_at timestamp default current_timestamp,
                 updated_at timestamp default current_timestamp
             )

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/exercise")
 @Slf4j
@@ -15,11 +17,11 @@ public class ExerciseController {
 
     @PostMapping
     public ExerciseDto createExercise(@RequestBody ExerciseDto dto) {
-        return exerciseService.createExercise(dto);
+        return exerciseService.create(dto);
     }
 
     @GetMapping
-    public void get() {
-
+    public List<ExerciseDto> getAll() {
+        return exerciseService.getAll();
     }
 }
