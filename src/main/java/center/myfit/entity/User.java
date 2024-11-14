@@ -17,7 +17,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
-    private String username;
     private String firstName;
     private String lastName;
     @Transient

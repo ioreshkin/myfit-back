@@ -29,12 +29,18 @@ public class ExerciseService {
     }
 
     private Exercise map(ExerciseDto dto) {
-        return new Exercise() {{
-            setTitle(dto.title());
-            setDescription(dto.description());
-            setPictureUrl(dto.pictureUrl());
-            setVideoUrl(dto.videoUrl());
-        }};
+        Exercise exercise = new Exercise();
+        exercise.setTitle(dto.title());
+        exercise.setDescription(dto.description());
+        exercise.setPictureUrl(dto.pictureUrl());
+        exercise.setVideoUrl(dto.videoUrl());
+//        {{
+//            setTitle(dto.title());
+//            setDescription(dto.description());
+//            setPictureUrl(dto.pictureUrl());
+//            setVideoUrl(dto.videoUrl());
+//        }};
+        return exercise;
     }
 
     private ExerciseDto map(Exercise exercise) {

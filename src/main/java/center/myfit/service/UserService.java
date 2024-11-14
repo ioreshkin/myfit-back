@@ -34,7 +34,6 @@ public class UserService {
 
         UserRepresentation representation = keycloak.realm("myfit").users().get(dto.userId()).toRepresentation();
         User user = new User();
-        user.setUsername(representation.getUsername());
         user.setFirstName(representation.getFirstName());
         user.setLastName(representation.getLastName());
         user.setEmail(representation.getEmail());
