@@ -73,7 +73,7 @@ class ExerciseControllerTest extends BaseIntegrationTest {
 
     private static Stream<Arguments> badExerciseDto() throws JsonProcessingException {
         ExerciseDto bad1 = new ExerciseDto(null, null, null, null, null);
-        ExerciseDto bad2 = new ExerciseDto(null, "", "some desc", null, null);
+        ExerciseDto bad2 = new ExerciseDto(null, "2`2211", "some desc", null, null);
         ExerciseDto bad3 = new ExerciseDto(null, "title", "", null, null);
         ExerciseDto bad4 = new ExerciseDto(null, "abcdefghijklmnopqrstvuwxyzabcdefghijklmnopqrstvuwxyzabcdefghijklmnopqrstvuwxyz", "some desc", null, null);
 
