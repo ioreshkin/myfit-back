@@ -10,7 +10,7 @@ public record UserWorkoutExerciseDto(
         @Min(1) @NotNull
         Integer repeats,
         @NotNull
-        UserDto user,
+        Long userId,
         @NotNull
-        WorkoutExerciseDto workoutExercise
+        Long workoutExerciseId
 ) {}
