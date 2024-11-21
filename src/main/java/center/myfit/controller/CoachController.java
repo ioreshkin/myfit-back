@@ -1,5 +1,6 @@
 package center.myfit.controller;
 
+import center.myfit.dto.AssignProgramDto;
 import center.myfit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ public class CoachController {
     }
 
     @PostMapping("assign-program")
-    public void assignProgram(Long userId, Long programId) {
-        userService.assignProgram(userId, programId);
+    public void assignProgram(@RequestBody AssignProgramDto dto) {
+        userService.assignProgram(dto);
     }
 }

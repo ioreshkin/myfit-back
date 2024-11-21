@@ -6,6 +6,6 @@ import center.myfit.entity.Workout;
 public record WorkoutExerciseDto(
         Integer repeats,
         Integer sets,
-        Workout workout,
-        Exercise exercise
+        WorkoutDto workout,
+        ExerciseDto exercise
 ) {}

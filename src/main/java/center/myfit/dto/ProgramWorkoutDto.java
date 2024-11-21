@@ -5,6 +5,6 @@ import center.myfit.entity.Workout;
 
 public record ProgramWorkoutDto(
         Integer orderNumber,
-        Program program,
-        Workout workout
+        ProgramDto program,
+        WorkoutDto workout
 ) {}

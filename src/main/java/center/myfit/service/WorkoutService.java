@@ -6,6 +6,8 @@ import center.myfit.entity.Exercise;
 import center.myfit.entity.User;
 import center.myfit.entity.Workout;
 import center.myfit.entity.WorkoutExercise;
+import center.myfit.mapper.WorkoutExerciseMapper;
+import center.myfit.mapper.WorkoutMapper;
 import center.myfit.repository.ExerciseRepository;
 import center.myfit.repository.WorkoutExerciseRepository;
 import center.myfit.repository.WorkoutRepository;
@@ -22,46 +24,49 @@ public class WorkoutService {
     private final ExerciseRepository exerciseRepository;
     private final WorkoutExerciseRepository workoutExerciseRepository;
     private final UserAware userAware;
+    private final WorkoutMapper workoutMapper;
+    private final WorkoutExerciseMapper workoutExerciseMapper;
 
     @Transactional
     public WorkoutDto create(WorkoutDto dto) {
-        Workout workout = map(dto);
+        Workout workout = workoutMapper.map(dto);
         User user = userAware.getUser();
         workout.setOwner(user);
         Workout saved = workoutRepository.save(workout);
         List<WorkoutExercise> workoutExercises = dto.exercises().stream().map(it -> map(it, workout)).toList();
         workoutExerciseRepository.saveAll(workoutExercises);
 
-        return map(saved);
+        return workoutMapper.map(saved);
     }
 
     public List<WorkoutDto> getAll() {
         User user = userAware.getUser();
-        return workoutRepository.findAllByOwner(user).stream().map(this::map).toList();
+        return workoutRepository.findAllByOwner(user).stream().map(workoutMapper::map).toList();
     }
 
-    private Workout map(WorkoutDto dto) {
-        return new Workout() {{
-            setTitle(dto.title());
-            setDescription(dto.description());
-            setDifficulty(dto.difficulty());
-        }};
-    }
-
-    private WorkoutDto map(Workout workout) {
-        return new WorkoutDto(workout.getId(), workout.getTitle(), workout.getDescription(), workout.getDifficulty(), null);
-    }
+//    private Workout map(WorkoutDto dto) {
+//        Workout workout = new Workout();
+//        workout.setTitle(dto.title());
+//        workout.setDescription(dto.description());
+//        workout.setDifficulty(dto.difficulty());
+//        return workout;
+//    }
+//
+//    private WorkoutDto map(Workout workout) {
+//        return new WorkoutDto(workout.getId(), workout.getTitle(), workout.getDescription(), workout.getDifficulty(), null);
+//    }
 
     private WorkoutExercise map(ExerciseForWorkoutDto dto, Workout workout) {
         Exercise exercise = exerciseRepository.findById(dto.id())
                 .orElseThrow(() -> new RuntimeException("Exercise with id = " + dto.id() + " not found"));
 
-        return new WorkoutExercise() {{
-            setWorkout(workout);
-            setExercise(exercise);
-            setRepeats(dto.repeats());
-            setSets(dto.sets());
-            setOrderNumber(dto.orderNumber());
-        }};
+        return workoutExerciseMapper.map(dto, workout, exercise);
+//        WorkoutExercise workoutExercise = new WorkoutExercise();
+//        workoutExercise.setWorkout(workout);
+//        workoutExercise.setExercise(exercise);
+//        workoutExercise.setRepeats(dto.repeats());
+//        workoutExercise.setSets(dto.sets());
+//        workoutExercise.setOrderNumber(dto.orderNumber());
+//        return workoutExercise;
     }
 }

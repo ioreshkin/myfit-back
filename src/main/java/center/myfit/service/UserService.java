@@ -1,5 +1,6 @@
 package center.myfit.service;
 
+import center.myfit.dto.AssignProgramDto;
 import center.myfit.dto.EventDto;
 import center.myfit.dto.ProgramDto;
 import center.myfit.dto.UserDto;
@@ -67,15 +68,14 @@ public class UserService {
             throw new RuntimeException("User already follow this coach");
         }
 
-        CoachUser coachUser = new CoachUser() {{
-            setCoach(coach);
-            setFollower(user);
-        }};
+        CoachUser coachUser = new CoachUser();
+        coachUser.setCoach(coach);
+        coachUser.setFollower(user);
 
         coachUserRepository.save(coachUser);
     }
 
-    public void assignProgram(Long userId, Long programId) {
+    public void assignProgram(AssignProgramDto dto) {
         User coach = userAware.getUser();
         boolean isCoach = keycloak.realm("").users()
                 .get(coach.getKeycloakId()).toRepresentation().getRealmRoles().stream().anyMatch("coach"::equals);
@@ -83,13 +83,13 @@ public class UserService {
             throw new RuntimeException("User is not coach");
         }
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User with id = " + userId + " not found"));
+        User user = userRepository.findById(dto.userId())
+                .orElseThrow(() -> new RuntimeException("User with id = " + dto.userId() + " not found"));
         if (!coachUserRepository.existsByCoachAndFollower(coach, user)) {
             throw new RuntimeException("User is not following this coach");
         }
-        Program program = programRepository.findById(programId)
-                .orElseThrow(() -> new RuntimeException("Program with id = " + programId + " not found"));
+        Program program = programRepository.findById(dto.programId())
+                .orElseThrow(() -> new RuntimeException("Program with id = " + dto.programId() + " not found"));
         ProgramUser programUser = new ProgramUser() {{
             setUser(user);
             setProgram(program);

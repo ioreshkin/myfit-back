@@ -5,6 +5,6 @@ import center.myfit.entity.User;
 
 public record ProgramUserDto(
         Integer lastOrderNumber,
-        Program program,
-        User user
+        ProgramDto program,
+        UserDto user
 ) {}
