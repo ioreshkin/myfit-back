@@ -33,7 +33,21 @@ public class WorkoutService {
         User user = userAware.getUser();
         workout.setOwner(user);
         Workout saved = workoutRepository.save(workout);
-        List<WorkoutExercise> workoutExercises = dto.exercises().stream().map(it -> map(it, workout)).toList();
+
+        List<WorkoutExercise> workoutExercises = dto.exercises().stream()
+                .map(exerciseForWorkoutDto -> {
+                    WorkoutExercise workoutExercise = new WorkoutExercise();
+                    workoutExercise.setWorkout(workout);
+                    workoutExercise.setSets(exerciseForWorkoutDto.sets());
+                    workoutExercise.setRepeats(exerciseForWorkoutDto.repeats());
+                    workoutExercise.setOrderNumber(exerciseForWorkoutDto.orderNumber());
+                    Exercise exercise = exerciseRepository.findById(exerciseForWorkoutDto.id())
+                            .orElseThrow(() ->
+                                    new RuntimeException("Exercise with id = " + exerciseForWorkoutDto.id() + "not found"));
+                    workoutExercise.setExercise(exercise);
+                    return workoutExercise;
+                }).toList();
+
         workoutExerciseRepository.saveAll(workoutExercises);
 
         return workoutMapper.map(saved);

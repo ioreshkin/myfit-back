@@ -2,10 +2,7 @@ package center.myfit.service;
 
 import center.myfit.dto.ProgramDto;
 import center.myfit.dto.WorkoutForProgramDto;
-import center.myfit.entity.Program;
-import center.myfit.entity.ProgramWorkout;
-import center.myfit.entity.User;
-import center.myfit.entity.Workout;
+import center.myfit.entity.*;
 import center.myfit.mapper.ProgramMapper;
 import center.myfit.mapper.ProgramWorkoutMapper;
 import center.myfit.repository.ProgramRepository;
@@ -31,7 +28,19 @@ public class ProgramService {
         Program program = programMapper.map(dto);
         Program saved = programRepository.save(program);
         User owner = userAware.getUser();
-        List<ProgramWorkout> programWorkouts = dto.workouts().stream().map(it -> map(it, saved, owner)).toList();
+
+
+        List<ProgramWorkout> programWorkouts = dto.workouts().stream()
+                .map(exerciseForWorkoutDto -> {
+                    ProgramWorkout programWorkout = new ProgramWorkout();
+                    programWorkout.setProgram(program);
+                    programWorkout.setOrderNumber(exerciseForWorkoutDto.orderNumber());
+                    Workout workout = workoutRepository.findByIdAndOwner(exerciseForWorkoutDto.id(), owner)
+                            .orElseThrow(() ->
+                                    new RuntimeException("Workout with id = " + exerciseForWorkoutDto.id() + "not found"));
+                    programWorkout.setWorkout(workout);
+                    return programWorkout;
+                }).toList();
 
         programWorkoutRepository.saveAll(programWorkouts);
 

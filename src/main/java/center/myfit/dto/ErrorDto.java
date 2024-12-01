@@ -6,4 +6,5 @@ public record ErrorDto(
         String message,
         int code,
         LocalDateTime timestamp
-) {}
+) {
+}

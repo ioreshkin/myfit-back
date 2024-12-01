@@ -16,6 +16,6 @@ public class Workout extends BaseEntity {
     private String description;
     private Integer difficulty;
     @ManyToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "owner_id")
     private User owner;
 }

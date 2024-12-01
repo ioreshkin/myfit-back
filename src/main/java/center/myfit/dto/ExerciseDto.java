@@ -11,4 +11,5 @@ public record ExerciseDto(
         String description,
         String pictureUrl,
         String videoUrl
-) {}
+) {
+}

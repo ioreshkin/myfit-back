@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface WorkoutRepository extends JpaRepository<Workout, Long> {
     Optional<Workout> findByIdAndOwner(Long id, User owner);
+
     List<Workout> findAllByOwner(User owner);
 }

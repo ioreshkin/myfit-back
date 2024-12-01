@@ -32,31 +32,6 @@ import java.util.Arrays;
 @EnableMethodSecurity(jsr250Enabled = true)
 public class SecurityConfig {
 
-    @Value("${cors.url}")
-    private String corsUrl;
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(c -> c.anyRequest().authenticated())
-                .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
-                .cors(c -> c.configurationSource(corsConfigurationSource()));
-        return http.build();
-    }
-
-    private UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(corsUrl));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails userDetails = User.withDefaultPasswordEncoder().username("admin").password("password").roles("KEYCLOAK").build();

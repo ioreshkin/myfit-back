@@ -2,8 +2,6 @@ package center.myfit.service;
 
 import center.myfit.dto.AssignProgramDto;
 import center.myfit.dto.EventDto;
-import center.myfit.dto.ProgramDto;
-import center.myfit.dto.UserDto;
 import center.myfit.entity.CoachUser;
 import center.myfit.entity.Program;
 import center.myfit.entity.ProgramUser;
@@ -32,7 +30,7 @@ public class UserService {
 
     @Async
     public void createUser(EventDto dto) {
-        if (dto.type().equals("LOGIN")) {
+        if (dto.type().equals("LOGIN") || dto.type().equals("LOGOUT")) {
             return;
         }
         int invite;

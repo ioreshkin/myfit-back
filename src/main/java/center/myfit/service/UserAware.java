@@ -15,10 +15,11 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class UserAware {
-    private final static String EMAIL_FIELD = "email";
+    private static final String EMAIL_FIELD = "email";
     private final UserRepository userRepository;
 
     public User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .map(Authentication::getPrincipal)
                 .filter(Jwt.class::isInstance)
@@ -29,6 +30,7 @@ public class UserAware {
                 .map(String.class::cast)
                 .filter(StringUtils::isNotBlank)
                 .orElseThrow(() -> new RuntimeException("No token"));
+        User userByEmail = userRepository.findUserByEmail(email).get();
         return userRepository.findUserByEmail(email).orElseThrow(() -> new RuntimeException("No user"));
     }
 }

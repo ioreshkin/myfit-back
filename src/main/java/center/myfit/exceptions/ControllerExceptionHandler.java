@@ -13,7 +13,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorDto> handleRuntimeException(RuntimeException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.valueOf(500))
                 .body(new ErrorDto(ex.getMessage(),
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         LocalDateTime.now()));

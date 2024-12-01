@@ -17,6 +17,7 @@ public class GeneralExceptionHandler {
         log.error(e.getMessage(), e);
         return ResponseEntity.internalServerError().body(new ExceptionDto(e.getMessage(), LocalDateTime.now()));
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDto> handle(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);

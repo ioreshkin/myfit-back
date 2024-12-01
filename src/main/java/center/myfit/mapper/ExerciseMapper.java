@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface ExerciseMapper {
     ExerciseDto map(Exercise exercise);
+
     Exercise map(ExerciseDto exercise);
 }

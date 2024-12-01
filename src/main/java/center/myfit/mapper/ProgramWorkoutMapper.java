@@ -3,7 +3,6 @@ package center.myfit.mapper;
 import center.myfit.dto.WorkoutForProgramDto;
 import center.myfit.entity.Program;
 import center.myfit.entity.ProgramWorkout;
-import center.myfit.entity.User;
 import center.myfit.entity.Workout;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

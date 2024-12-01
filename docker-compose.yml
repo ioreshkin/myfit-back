@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:15.8-alpine3.20
+    image: nexus.fitcycle.online/postgres
     container_name: postgres
     restart: on-failure
     env_file: .env-postgres
@@ -15,7 +15,7 @@ services:
       - ./dbdata:/var/lib/postgresql/data
 
   app-db:
-    image: postgres:15.8-alpine3.20
+    image: nexus.fitcycle.online/postgres
     container_name: app-db
     restart: on-failure
     env_file: .env-app-db
@@ -27,14 +27,13 @@ services:
       timeout: 33s
       retries: 3
       start_period: 5s
-#    volumes:
-#      - ./appdata:/var/lib/postgresql/data
+  #    volumes:
+  #      - ./appdata:/var/lib/postgresql/data
 
   keycloak:
-    build:
-      context: .
+    image: nexus.fitcycle.online/keycloak
     container_name: keycloak
-    command: ["start", "--db", "postgres", "--hostname-strict-https", "false",  "--hostname-strict", "false",  "--proxy", "edge", "--http-enabled", "true", "--import-realm",  "--spi-user-profile-legacy-user-profile-read-only-attributes", "*_RES_ACCESS_MODE"]
+    command: [ "start", "--db", "postgres", "--hostname-strict-https", "false",  "--hostname-strict", "false",  "--proxy", "edge", "--http-enabled", "true", "--import-realm",  "--spi-user-profile-legacy-user-profile-read-only-attributes", "*_RES_ACCESS_MODE" ]
     env_file: .env-keycloak
     ports:
       - 8080:8080

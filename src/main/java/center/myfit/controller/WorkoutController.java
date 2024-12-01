@@ -1,8 +1,8 @@
 package center.myfit.controller;
 
 import center.myfit.dto.WorkoutDto;
-import center.myfit.entity.Workout;
 import center.myfit.service.WorkoutService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class WorkoutController {
     private final WorkoutService workoutService;
 
     @PostMapping
-    public WorkoutDto createWorkout(@RequestBody WorkoutDto dto) {
+    public WorkoutDto createWorkout(@RequestBody @Valid WorkoutDto dto) {
         return workoutService.create(dto);
     }
 
