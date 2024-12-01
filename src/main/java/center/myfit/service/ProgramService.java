@@ -2,7 +2,10 @@ package center.myfit.service;
 
 import center.myfit.dto.ProgramDto;
 import center.myfit.dto.WorkoutForProgramDto;
-import center.myfit.entity.*;
+import center.myfit.entity.Program;
+import center.myfit.entity.ProgramWorkout;
+import center.myfit.entity.User;
+import center.myfit.entity.Workout;
 import center.myfit.mapper.ProgramMapper;
 import center.myfit.mapper.ProgramWorkoutMapper;
 import center.myfit.repository.ProgramRepository;

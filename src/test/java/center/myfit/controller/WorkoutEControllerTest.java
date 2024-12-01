@@ -2,7 +2,6 @@ package center.myfit.controller;
 
 import center.myfit.BaseIntegrationTest;
 import center.myfit.config.utils.WithMockUser;
-import center.myfit.dto.ExerciseDto;
 import center.myfit.dto.ExerciseForWorkoutDto;
 import center.myfit.dto.WorkoutDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,7 +37,7 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
 
     @Test
     @WithMockUser(email = TEST_EMAIL)
-    @Sql(scripts = {"/test_user.sql", "/test_workout.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/test_user.sql", "/test_workouts.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void getAllWorkouts_shouldReturnAllWorkouts() throws Exception {
         mockMvc.perform(get(BASE_URL).contentType(CONTENT_TYPE_JSON))
                 .andExpect(status().isOk())
