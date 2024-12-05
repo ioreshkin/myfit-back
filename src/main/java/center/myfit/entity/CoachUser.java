@@ -12,10 +12,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CoachUser extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "coach_id")
-    private User coach;
-    @ManyToOne
-    @JoinColumn(name = "follower_id")
-    private User follower;
+  @ManyToOne
+  @JoinColumn(name = "coach_id")
+  private User coach;
+
+  @ManyToOne
+  @JoinColumn(name = "follower_id")
+  private User follower;
 }

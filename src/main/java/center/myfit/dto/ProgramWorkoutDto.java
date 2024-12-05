@@ -1,7 +1,3 @@
 package center.myfit.dto;
 
-public record ProgramWorkoutDto(
-        Integer orderNumber,
-        Long workoutId
-) {
-}
+public record ProgramWorkoutDto(Integer orderNumber, Long workoutId) {}

@@ -10,9 +10,9 @@ import org.springframework.web.context.WebApplicationContext;
 @ActiveProfiles("test")
 public abstract class BaseIntegrationTest {
 
-    protected MockMvc mockMvc;
+  protected MockMvc mockMvc;
 
-    public BaseIntegrationTest(WebApplicationContext context) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+  public BaseIntegrationTest(WebApplicationContext context) {
+    mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+  }
 }

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface ProgramMapper {
-    ProgramDto map(Program program);
+  ProgramDto map(Program program);
 
-    Program map(ProgramDto program);
+  Program map(ProgramDto program);
 }

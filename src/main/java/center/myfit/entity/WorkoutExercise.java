@@ -12,13 +12,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class WorkoutExercise extends BaseEntity {
-    private Integer repeats;
-    private Integer sets;
-    private Integer orderNumber;
-    @ManyToOne
-    @JoinColumn(name = "workout_id")
-    private Workout workout;
-    @ManyToOne
-    @JoinColumn(name = "exercise_id")
-    private Exercise exercise;
+  private Integer repeats;
+  private Integer sets;
+  private Integer orderNumber;
+
+  @ManyToOne
+  @JoinColumn(name = "workout_id")
+  private Workout workout;
+
+  @ManyToOne
+  @JoinColumn(name = "exercise_id")
+  private Exercise exercise;
 }

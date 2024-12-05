@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface ExerciseMapper {
-    CreateExerciseDto map(Exercise exercise);
+  CreateExerciseDto map(Exercise exercise);
 
-    Exercise map(CreateExerciseDto exercise);
+  Exercise map(CreateExerciseDto exercise);
 }

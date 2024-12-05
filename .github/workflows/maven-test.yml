@@ -15,6 +15,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
+          server-id: github
+          server-username: PACKAGE_USERNAME
+          server-password: PACKAGE_PASSWORD
       - name: cache-maven-repo
         uses: actions/cache@v4
         with:
@@ -23,3 +26,6 @@ jobs:
           restore-keys: ${{ runner.os }}-maven-
       - name: test
         run: mvn test
+        env:
+          PACKAGE_USERNAME: ${{ secrets.PACKAGE_USERNAME }}
+          PACKAGE_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}

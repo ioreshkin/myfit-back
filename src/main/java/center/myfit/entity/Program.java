@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Program extends BaseEntity {
-    private String title;
-    private String description;
+  private String title;
+  private String description;
 }

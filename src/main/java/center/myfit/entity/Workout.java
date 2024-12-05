@@ -12,10 +12,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Workout extends BaseEntity {
-    private String title;
-    private String description;
-    private Integer difficulty;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
+  private String title;
+  private String description;
+  private Integer difficulty;
+
+  @ManyToOne
+  @JoinColumn(name = "owner_id")
+  private User owner;
 }

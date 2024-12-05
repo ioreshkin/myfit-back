@@ -11,26 +11,30 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Configuration
 @EnableAsync
 public class KeycloakConfig {
-    @Value("${keycloak.url}")
-    private String url;
-    @Value("${keycloak.username}")
-    private String username;
-    @Value("${keycloak.password}")
-    private String password;
-    @Value("${keycloak.realm}")
-    private String realm;
-    @Value("${keycloak.client-id}")
-    private String clientID;
+  @Value("${keycloak.url}")
+  private String url;
 
-    @Bean
-    Keycloak keycloak() {
-        return KeycloakBuilder.builder()
-                .grantType(OAuth2Constants.PASSWORD)
-                .serverUrl(url)
-                .realm(realm)
-                .username(username)
-                .password(password)
-                .clientId(clientID)
-                .build();
-    }
+  @Value("${keycloak.username}")
+  private String username;
+
+  @Value("${keycloak.password}")
+  private String password;
+
+  @Value("${keycloak.realm}")
+  private String realm;
+
+  @Value("${keycloak.client-id}")
+  private String clientId;
+
+  @Bean
+  Keycloak keycloak() {
+    return KeycloakBuilder.builder()
+        .grantType(OAuth2Constants.PASSWORD)
+        .serverUrl(url)
+        .realm(realm)
+        .username(username)
+        .password(password)
+        .clientId(clientId)
+        .build();
+  }
 }

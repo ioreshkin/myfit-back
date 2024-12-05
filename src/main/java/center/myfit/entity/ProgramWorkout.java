@@ -12,11 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProgramWorkout extends BaseEntity {
-    private Integer orderNumber;
-    @ManyToOne
-    @JoinColumn(name = "program_id")
-    private Program program;
-    @ManyToOne
-    @JoinColumn(name = "workout_id")
-    private Workout workout;
+  private Integer orderNumber;
+
+  @ManyToOne
+  @JoinColumn(name = "program_id")
+  private Program program;
+
+  @ManyToOne
+  @JoinColumn(name = "workout_id")
+  private Workout workout;
 }

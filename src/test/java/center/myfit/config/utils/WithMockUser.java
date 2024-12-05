@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 @WithSecurityContext(factory = WithMockUserSecurityContextFactory.class)
 public @interface WithMockUser {
-    String email() default "user@user.com";
+  String email() default "user@user.com";
 
-    String id() default "1";
+  String id() default "1";
 }

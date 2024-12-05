@@ -9,19 +9,18 @@ import org.mapstruct.Mapping;
 
 @Mapper
 public interface ProgramWorkoutMapper {
-    @Mapping(target = "orderNumber", source = "dto.orderNumber")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    ProgramWorkout map(WorkoutForProgramDto dto, Program program, Workout workout);
+  @Mapping(target = "orderNumber", source = "dto.orderNumber")
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  ProgramWorkout map(WorkoutForProgramDto dto, Program program, Workout workout);
 }
 
-
-//Workout workout = workoutRepository.findByIdAndOwner(dto.id(), owner)
+// Workout workout = workoutRepository.findByIdAndOwner(dto.id(), owner)
 //        .orElseThrow(() -> new RuntimeException("Workout with id = " + dto.id() + " not found"));
 //
 //        return new ProgramWorkout() {{
 //    setProgram(program);
 //    setWorkout(workout);
 //    setOrderNumber(dto.orderNumber());
-//}};
+// }};

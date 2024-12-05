@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class KeycloakController {
-    private final UserService userService;
+  private final UserService userService;
 
-    @PostMapping
-    @PreAuthorize("hasRole('KEYCLOAK')")
-    public void eventHandler(@RequestBody EventDto dto) {
-        log.info(dto.toString());
-        userService.createUser(dto);
-    }
+  @PostMapping
+  @PreAuthorize("hasRole('KEYCLOAK')")
+  public void eventHandler(@RequestBody EventDto dto) {
+    log.info(dto.toString());
+    userService.createUser(dto);
+  }
 }
