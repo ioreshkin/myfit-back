@@ -1,12 +1,12 @@
 package center.myfit.mapper;
 
-import center.myfit.dto.ExerciseDto;
+import center.myfit.dto.CreateExerciseDto;
 import center.myfit.entity.Exercise;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface ExerciseMapper {
-    ExerciseDto map(Exercise exercise);
+    CreateExerciseDto map(Exercise exercise);
 
-    Exercise map(ExerciseDto exercise);
+    Exercise map(CreateExerciseDto exercise);
 }

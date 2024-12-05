@@ -2,7 +2,7 @@ package center.myfit.controller;
 
 import center.myfit.BaseIntegrationTest;
 import center.myfit.config.utils.WithMockUser;
-import center.myfit.dto.ExerciseDto;
+import center.myfit.dto.CreateExerciseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -69,10 +69,10 @@ class ExerciseControllerTest extends BaseIntegrationTest {
     }
 
     private static Stream<Arguments> badExerciseDto() throws JsonProcessingException {
-        ExerciseDto bad1 = new ExerciseDto(null, null, null, null, null);
-        ExerciseDto bad2 = new ExerciseDto(null, "", "some desc", null, null);
-        ExerciseDto bad3 = new ExerciseDto(null, "title", "", null, null);
-        ExerciseDto bad4 = new ExerciseDto(null, "abcdefghijklmnopqrstvuwxyzabcdefghijklmnopqrstvuwxyzabcdefghijklmnopqrstvuwxyz", "some desc", null, null);
+        CreateExerciseDto bad1 = new CreateExerciseDto(null, null, null, null, null);
+        CreateExerciseDto bad2 = new CreateExerciseDto(null, "", "some desc", null, null);
+        CreateExerciseDto bad3 = new CreateExerciseDto(null, "title", "", null, null);
+        CreateExerciseDto bad4 = new CreateExerciseDto(null, "abcdefghijklmnopqrstvuwxyzabcdefghijklmnopqrstvuwxyzabcdefghijklmnopqrstvuwxyz", "some desc", null, null);
 
         return Stream.of(
                 Arguments.of("null", mapper.writeValueAsString(bad1)),
@@ -82,8 +82,8 @@ class ExerciseControllerTest extends BaseIntegrationTest {
         );
     }
 
-    private ExerciseDto getDefaultExerciseDto() {
-        return new ExerciseDto(null, EXERCISE_TITLE, EXERCISE_DESCRIPTION, null, null);
+    private CreateExerciseDto getDefaultExerciseDto() {
+        return new CreateExerciseDto(null, EXERCISE_TITLE, EXERCISE_DESCRIPTION, null, null);
     }
 
     private String getExerciseDtoJson() {

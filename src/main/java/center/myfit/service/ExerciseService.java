@@ -1,6 +1,6 @@
 package center.myfit.service;
 
-import center.myfit.dto.ExerciseDto;
+import center.myfit.dto.CreateExerciseDto;
 import center.myfit.dto.UserWorkoutExerciseDto;
 import center.myfit.entity.Exercise;
 import center.myfit.entity.User;
@@ -26,14 +26,14 @@ public class ExerciseService {
     private final UserAware userAware;
     private final ExerciseMapper exerciseMapper;
 
-    public ExerciseDto create(ExerciseDto dto) {
+    public CreateExerciseDto create(CreateExerciseDto dto) {
         Exercise exercise = exerciseMapper.map(dto);
         exercise.setOwner(userAware.getUser());
         Exercise saved = exerciseRepository.save(exercise);
         return exerciseMapper.map(saved);
     }
 
-    public List<ExerciseDto> getAll() {
+    public List<CreateExerciseDto> getAll() {
         User user = userAware.getUser();
         return exerciseRepository.findAllByOwner(user).stream().map(exerciseMapper::map).toList();
     }

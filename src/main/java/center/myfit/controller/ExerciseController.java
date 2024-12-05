@@ -1,6 +1,6 @@
 package center.myfit.controller;
 
-import center.myfit.dto.ExerciseDto;
+import center.myfit.dto.CreateExerciseDto;
 import center.myfit.dto.UserWorkoutExerciseDto;
 import center.myfit.service.ExerciseService;
 import jakarta.validation.Valid;
@@ -18,12 +18,12 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
 
     @PostMapping
-    public ExerciseDto createExercise(@RequestBody @Valid ExerciseDto dto) {
+    public CreateExerciseDto createExercise(@RequestBody @Valid CreateExerciseDto dto) {
         return exerciseService.create(dto);
     }
 
     @GetMapping
-    public List<ExerciseDto> getAll() {
+    public List<CreateExerciseDto> getAll() {
         return exerciseService.getAll();
     }
 
