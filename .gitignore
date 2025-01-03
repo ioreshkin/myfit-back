@@ -2,6 +2,10 @@
 .idea
 # Compiled class file
 *.class
+target
+dbdata
+appdata
+minio_data
 
 # Log file
 *.log

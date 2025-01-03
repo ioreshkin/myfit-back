@@ -1,0 +1,69 @@
+version: "3.9"
+services:
+  postgres:
+    image: nexus.fitcycle.online/postgres
+    container_name: postgres
+    restart: on-failure
+    env_file: .env-postgres
+    healthcheck:
+      test: pg_isready -d postgres
+      interval: 5s
+      timeout: 60s
+      retries: 10
+      start_period: 5s
+#    volumes:
+#      - ./dbdata:/pg_data
+
+  app-db:
+    image: nexus.fitcycle.online/postgres
+    container_name: app-db
+    restart: on-failure
+    env_file: .env-app-db
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -d postgres
+      interval: 5s
+      timeout: 60s
+      retries: 10
+      start_period: 5s
+#    volumes:
+#      - ./appdata:/pg_data
+
+  keycloak:
+    image: nexus.fitcycle.online/keycloak
+    container_name: keycloak
+    command: [ "start", "--db", "postgres", "--hostname-strict-https", "false",  "--hostname-strict", "false",  "--proxy", "edge", "--http-enabled", "true", "--import-realm",  "--spi-user-profile-legacy-user-profile-read-only-attributes", "*_RES_ACCESS_MODE" ]
+    env_file: .env-keycloak
+    ports:
+      - 8080:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  rabbitmq:
+    image: nexus.fitcycle.online/rabbit
+    container_name: rabbitmq
+    env_file: .env-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  minio:
+    image: nexus.fitcycle.online/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+#    volumes:
+#      - ./minio_data:/data:z
+    env_file: .env-minio
+    command: server /data --console-address ":9001"
+
+#volumes:
+#  dbdata:
+#    driver: local
+#  minio_data:
+#    driver: local
+#  appdata:
+#    driver: local

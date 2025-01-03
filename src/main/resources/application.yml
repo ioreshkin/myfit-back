@@ -1,0 +1,30 @@
+server:
+  port: 80
+
+spring:
+  liquibase: enable
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt.issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/myfit}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/app}
+    username: ${DB_USER:app}
+    password: ${DB_PASSWORD:pass}
+
+
+cors:
+  url: ${CORS_URL:http://localhost:3000}
+
+keycloak:
+  url: ${KEYCLOAK_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:master}
+  username: ${KEYCLOAK_USERNAME:admin}
+  password: ${KEYCLOAK_PASSWORD:pw}
+  client-id: ${KEYCLOAK_CLIENT_ID:admin-cli}
+
+tuz:
+  username: ${TUZ_USER:tuz}
+  password: ${TUZ_PASSWORD:password}
