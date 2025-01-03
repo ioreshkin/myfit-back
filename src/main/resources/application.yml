@@ -19,14 +19,12 @@ cors:
   url: ${CORS_URL:http://localhost:3000}
 
 keycloak:
-  url: http://localhost:8080
-  realm: master
-  username: admin
-  password: pw
-  client-id: admin-cli
+  url: ${KEYCLOAK_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:master}
+  username: ${KEYCLOAK_USERNAME:admin}
+  password: ${KEYCLOAK_PASSWORD:pw}
+  client-id: ${KEYCLOAK_CLIENT_ID:admin-cli}
 
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        security: DEBUG
+tuz:
+  username: ${TUZ_USER:tuz}
+  password: ${TUZ_PASSWORD:password}

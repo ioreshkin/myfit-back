@@ -7,20 +7,14 @@ import center.myfit.entity.Workout;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+/** Маппер для ProgramWorkout. */
 @Mapper
 public interface ProgramWorkoutMapper {
+
+  /** Получение ProgramWorkout. */
   @Mapping(target = "orderNumber", source = "dto.orderNumber")
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdAt", ignore = true)
   @Mapping(target = "updatedAt", ignore = true)
   ProgramWorkout map(WorkoutForProgramDto dto, Program program, Workout workout);
 }
-
-// Workout workout = workoutRepository.findByIdAndOwner(dto.id(), owner)
-//        .orElseThrow(() -> new RuntimeException("Workout with id = " + dto.id() + " not found"));
-//
-//        return new ProgramWorkout() {{
-//    setProgram(program);
-//    setWorkout(workout);
-//    setOrderNumber(dto.orderNumber());
-// }};

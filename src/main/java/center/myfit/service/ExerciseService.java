@@ -1,20 +1,23 @@
 package center.myfit.service;
 
-import center.myfit.dto.CreateExerciseDto;
 import center.myfit.dto.UserWorkoutExerciseDto;
 import center.myfit.entity.Exercise;
 import center.myfit.entity.User;
 import center.myfit.entity.UserWorkoutExercise;
 import center.myfit.entity.WorkoutExercise;
+import center.myfit.exception.UserNotAuthenticated;
 import center.myfit.mapper.ExerciseMapper;
 import center.myfit.repository.ExerciseRepository;
 import center.myfit.repository.UserRepository;
 import center.myfit.repository.UserWorkoutExerciseRepository;
 import center.myfit.repository.WorkoutExerciseRepository;
+import center.myfit.starter.dto.ExerciseDto;
+import center.myfit.starter.service.UserAware;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/** Сервис работы с упражнениями. */
 @Service
 @RequiredArgsConstructor
 public class ExerciseService {
@@ -22,21 +25,28 @@ public class ExerciseService {
   private final UserRepository userRepository;
   private final WorkoutExerciseRepository workoutExerciseRepository;
   private final UserWorkoutExerciseRepository userWorkoutExerciseRepository;
-  private final UserAware userAware;
+  private final UserAware<User> userAware;
   private final ExerciseMapper exerciseMapper;
 
-  public CreateExerciseDto create(CreateExerciseDto dto) {
-    Exercise exercise = exerciseMapper.map(dto);
-    exercise.setOwner(userAware.getUser());
+  /** Создание упражнения. */
+  public ExerciseDto create(ExerciseDto dto) {
+    User user =
+        userRepository
+            .findUserByKeycloakId(dto.keycloakId())
+            .orElseThrow(() -> new UserNotAuthenticated("Пользователь не найден!"));
+    Exercise exercise = exerciseMapper.map(dto, user);
+    exercise.setOwner(user);
     Exercise saved = exerciseRepository.save(exercise);
     return exerciseMapper.map(saved);
   }
 
-  public List<CreateExerciseDto> getAll() {
+  /** Получить все упражнения. */
+  public List<ExerciseDto> getAll() {
     User user = userAware.getUser();
     return exerciseRepository.findAllByOwner(user).stream().map(exerciseMapper::map).toList();
   }
 
+  /** Созранить выполение упражнения. */
   public void saveApproach(UserWorkoutExerciseDto dto) {
     UserWorkoutExercise uwe = new UserWorkoutExercise();
     User user =

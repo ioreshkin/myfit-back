@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/** Сущность WorkoutExercise. */
 @Entity
 @Getter
 @Setter

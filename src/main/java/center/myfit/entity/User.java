@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/** Сущность User. */
 @Entity
 @Table(name = "users")
 @Getter

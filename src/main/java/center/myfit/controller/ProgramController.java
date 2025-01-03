@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** Контроллер тренировочных программ. */
 @RestController
 @RequestMapping("/program")
 @Slf4j
@@ -18,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProgramController {
   private final ProgramService programService;
 
+  /** Создание программы. */
   @PostMapping
   public ProgramDto createProgram(@RequestBody ProgramDto dto) {
     return programService.create(dto);
   }
 
+  /** Получить все программы. */
   @GetMapping
   public List<ProgramDto> getAll() {
     return programService.getAll();

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** Контроллер тренировок. */
 @RestController
 @RequestMapping("/workout")
 @Slf4j
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class WorkoutController {
   private final WorkoutService workoutService;
 
+  /** Создание тренровки. */
   @PostMapping
   public WorkoutDto createWorkout(@RequestBody @Valid WorkoutDto dto) {
     return workoutService.create(dto);
   }
 
+  /** Получить все трпенировки. */
   @GetMapping
   public List<WorkoutDto> getAll() {
     return workoutService.getAll();

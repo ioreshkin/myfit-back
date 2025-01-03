@@ -1,0 +1,9 @@
+{
+  "title": "exercise tittle",
+  "description": "exercise description",
+  "videoUrl": "https://you.tube/iuytuoy",
+  "keycloakId": "wrong",
+  "image": {
+    "original": "originalurl.png"
+  }
+}

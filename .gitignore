@@ -5,6 +5,7 @@
 target
 dbdata
 appdata
+minio_data
 
 # Log file
 *.log

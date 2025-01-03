@@ -1,6 +1,5 @@
 package center.myfit.service;
 
-import center.myfit.dto.ExerciseForWorkoutDto;
 import center.myfit.dto.WorkoutDto;
 import center.myfit.entity.Exercise;
 import center.myfit.entity.User;
@@ -11,21 +10,24 @@ import center.myfit.mapper.WorkoutMapper;
 import center.myfit.repository.ExerciseRepository;
 import center.myfit.repository.WorkoutExerciseRepository;
 import center.myfit.repository.WorkoutRepository;
+import center.myfit.starter.service.UserAware;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/** Сервис работы с тренировками. */
 @Service
 @RequiredArgsConstructor
 public class WorkoutService {
   private final WorkoutRepository workoutRepository;
   private final ExerciseRepository exerciseRepository;
   private final WorkoutExerciseRepository workoutExerciseRepository;
-  private final UserAware userAware;
+  private final UserAware<User> userAware;
   private final WorkoutMapper workoutMapper;
   private final WorkoutExerciseMapper workoutExerciseMapper;
 
+  /** Создание тренировки. */
   @Transactional
   public WorkoutDto create(WorkoutDto dto) {
     Workout workout = workoutMapper.map(dto);
@@ -36,20 +38,20 @@ public class WorkoutService {
     List<WorkoutExercise> workoutExercises =
         dto.exercises().stream()
             .map(
-                exerciseForWorkoutDto -> {
+                exerciseWorkoutDto -> {
                   WorkoutExercise workoutExercise = new WorkoutExercise();
                   workoutExercise.setWorkout(workout);
-                  workoutExercise.setSets(exerciseForWorkoutDto.sets());
-                  workoutExercise.setRepeats(exerciseForWorkoutDto.repeats());
-                  workoutExercise.setOrderNumber(exerciseForWorkoutDto.orderNumber());
+                  workoutExercise.setSets(exerciseWorkoutDto.sets());
+                  workoutExercise.setRepeats(exerciseWorkoutDto.repeats());
+                  workoutExercise.setOrderNumber(exerciseWorkoutDto.orderNumber());
                   Exercise exercise =
                       exerciseRepository
-                          .findById(exerciseForWorkoutDto.id())
+                          .findById(exerciseWorkoutDto.id())
                           .orElseThrow(
                               () ->
                                   new RuntimeException(
                                       "Exercise with id = "
-                                          + exerciseForWorkoutDto.id()
+                                          + exerciseWorkoutDto.id()
                                           + "not found"));
                   workoutExercise.setExercise(exercise);
                   return workoutExercise;
@@ -61,38 +63,9 @@ public class WorkoutService {
     return workoutMapper.map(saved);
   }
 
+  /** Получить все тренировки. */
   public List<WorkoutDto> getAll() {
     User user = userAware.getUser();
     return workoutRepository.findAllByOwner(user).stream().map(workoutMapper::map).toList();
-  }
-
-  //    private Workout map(WorkoutDto dto) {
-  //        Workout workout = new Workout();
-  //        workout.setTitle(dto.title());
-  //        workout.setDescription(dto.description());
-  //        workout.setDifficulty(dto.difficulty());
-  //        return workout;
-  //    }
-  //
-  //    private WorkoutDto map(Workout workout) {
-  //        return new WorkoutDto(workout.getId(), workout.getTitle(), workout.getDescription(),
-  // workout.getDifficulty(), null);
-  //    }
-
-  private WorkoutExercise map(ExerciseForWorkoutDto dto, Workout workout) {
-    Exercise exercise =
-        exerciseRepository
-            .findById(dto.id())
-            .orElseThrow(
-                () -> new RuntimeException("Exercise with id = " + dto.id() + " not found"));
-
-    return workoutExerciseMapper.map(dto, workout, exercise);
-    //        WorkoutExercise workoutExercise = new WorkoutExercise();
-    //        workoutExercise.setWorkout(workout);
-    //        workoutExercise.setExercise(exercise);
-    //        workoutExercise.setRepeats(dto.repeats());
-    //        workoutExercise.setSets(dto.sets());
-    //        workoutExercise.setOrderNumber(dto.orderNumber());
-    //        return workoutExercise;
   }
 }

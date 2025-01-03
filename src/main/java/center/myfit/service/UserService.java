@@ -10,6 +10,7 @@ import center.myfit.repository.CoachUserRepository;
 import center.myfit.repository.ProgramRepository;
 import center.myfit.repository.ProgramUserRepository;
 import center.myfit.repository.UserRepository;
+import center.myfit.starter.service.UserAware;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
@@ -17,6 +18,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+/** Сервис работы с пользователями. */
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -25,8 +27,9 @@ public class UserService {
   private final CoachUserRepository coachUserRepository;
   private final ProgramRepository programRepository;
   private final ProgramUserRepository programUserRepository;
-  private final UserAware userAware;
+  private final UserAware<User> userAware;
 
+  /** Создание пользователя. */
   @Async
   public void createUser(EventDto dto) {
     if (dto.type().equals("LOGIN") || dto.type().equals("LOGOUT")) {
@@ -49,6 +52,7 @@ public class UserService {
     userRepository.save(user);
   }
 
+  /** Подписка на тренера. */
   public void followCoach(Integer invite) {
     User coach =
         userRepository
@@ -83,6 +87,7 @@ public class UserService {
     coachUserRepository.save(coachUser);
   }
 
+  /** Назначение программы. */
   public void assignProgram(AssignProgramDto dto) {
     User coach = userAware.getUser();
     boolean isCoach =

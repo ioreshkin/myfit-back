@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** KeycloakController. */
 @RestController
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class KeycloakController {
   private final UserService userService;
 
+  /** Обработка события кейклока. */
   @PostMapping
   @PreAuthorize("hasRole('KEYCLOAK')")
   public void eventHandler(@RequestBody EventDto dto) {

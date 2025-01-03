@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "title": "exercise tittle",
+  "description": "exercise description",
+  "videoUrl": "https://you.tube/iuytuoy",
+  "owner": {
+    "id": 1,
+    "firstName": "first_name",
+    "lastName": "last_name",
+    "email": "test@test.com",
+    "keycloakId": "keyclId",
+    "invite": 123
+  },
+  "image": {
+    "original": "originalurl.png"
+  }
+}

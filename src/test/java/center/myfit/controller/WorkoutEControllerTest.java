@@ -9,9 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import center.myfit.BaseIntegrationTest;
-import center.myfit.config.utils.WithMockUser;
-import center.myfit.dto.ExerciseForWorkoutDto;
+import center.myfit.dto.ExerciseWorkoutDto;
 import center.myfit.dto.WorkoutDto;
+import center.myfit.starter.test.WithMockUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -35,9 +35,9 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
   }
 
   @Test
-  @WithMockUser(email = TEST_EMAIL)
+  @WithMockUser(keycloakId = "keyclId")
   @Sql(
-      scripts = {"/test_user.sql", "/test_workouts.sql"},
+      scripts = {"/sql/test_user.sql", "/sql/test_workouts.sql"},
       executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void getAllWorkouts_shouldReturnAllWorkouts() throws Exception {
     mockMvc
@@ -47,8 +47,8 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
   }
 
   @Test
-  @WithMockUser(email = TEST_EMAIL)
-  @Sql(scripts = {"/test_user.sql", "/test_exercises.sql"})
+  @WithMockUser(keycloakId = "keyclId")
+  @Sql(scripts = {"/sql/test_user.sql", "/sql/test_exercises.sql"})
   void createWorkout_shouldReturnCreatedWorkout() throws Exception {
     mockMvc
         .perform(post(BASE_URL).contentType(CONTENT_TYPE_JSON).content(getWorkoutDtoJson()))
@@ -57,8 +57,8 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
   }
 
   @Test
-  @WithMockUser(email = WRONG_USER_EMAIL)
-  @Sql(value = "/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  @WithMockUser(keycloakId = "keyclId")
+  @Sql(value = "/sql/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void createWorkout_withWrongUser_shouldReturnUserNotFound() throws Exception {
     mockMvc
         .perform(post(BASE_URL).contentType(CONTENT_TYPE_JSON).content(getWorkoutDtoJson()))
@@ -67,8 +67,8 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
 
   @ParameterizedTest(name = "{0}")
   @MethodSource({"badWorkoutDto", "badExerciseForWorkoutDto"})
-  @WithMockUser(email = TEST_EMAIL)
-  @Sql(value = "/test_user.sql")
+  @WithMockUser(keycloakId = "keyclId")
+  @Sql(value = "/sql/test_user.sql")
   void createWorkout_shouldReturnBadRequest(String name, String value) throws Exception {
     mockMvc
         .perform(post(BASE_URL).contentType(CONTENT_TYPE_JSON).content(value))
@@ -76,8 +76,8 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
   }
 
   private static Stream<Arguments> badWorkoutDto() throws JsonProcessingException {
-    List<ExerciseForWorkoutDto> dtos = new ArrayList<>();
-    dtos.add(new ExerciseForWorkoutDto(1L, 10, 5, 1));
+    List<ExerciseWorkoutDto> dtos = new ArrayList<>();
+    dtos.add(new ExerciseWorkoutDto(1L, 10, 5, 1));
 
     WorkoutDto bad1 = new WorkoutDto(null, null, null, null, null);
     WorkoutDto bad2 = new WorkoutDto(null, "", "some desc", 1, dtos);
@@ -102,28 +102,28 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
   }
 
   private static Stream<Arguments> badExerciseForWorkoutDto() throws JsonProcessingException {
-    List<ExerciseForWorkoutDto> dtos = new ArrayList<>();
-    dtos.add(new ExerciseForWorkoutDto(1L, 10, 5, 1));
+    List<ExerciseWorkoutDto> dtos = new ArrayList<>();
+    dtos.add(new ExerciseWorkoutDto(1L, 10, 5, 1));
 
     WorkoutDto bad1 = new WorkoutDto(null, "title", "some desc", 1, null);
     WorkoutDto bad2 =
         new WorkoutDto(
-            null, "title", "some desc", 1, List.of(new ExerciseForWorkoutDto(null, null, 10, 1)));
+            null, "title", "some desc", 1, List.of(new ExerciseWorkoutDto(null, null, 10, 1)));
     WorkoutDto bad3 =
         new WorkoutDto(
-            null, "title", "some desc", 1, List.of(new ExerciseForWorkoutDto(null, 5, null, 1)));
+            null, "title", "some desc", 1, List.of(new ExerciseWorkoutDto(null, 5, null, 1)));
     WorkoutDto bad4 =
         new WorkoutDto(
-            null, "title", "some desc", 1, List.of(new ExerciseForWorkoutDto(null, 5, 10, null)));
+            null, "title", "some desc", 1, List.of(new ExerciseWorkoutDto(null, 5, 10, null)));
     WorkoutDto bad5 =
         new WorkoutDto(
-            null, "title", "some desc", 1, List.of(new ExerciseForWorkoutDto(null, 1001, 10, 1)));
+            null, "title", "some desc", 1, List.of(new ExerciseWorkoutDto(null, 1001, 10, 1)));
     WorkoutDto bad6 =
         new WorkoutDto(
-            null, "title", "some desc", 1, List.of(new ExerciseForWorkoutDto(null, 5, 101, 1)));
+            null, "title", "some desc", 1, List.of(new ExerciseWorkoutDto(null, 5, 101, 1)));
     WorkoutDto bad7 =
         new WorkoutDto(
-            null, "title", "some desc", 1, List.of(new ExerciseForWorkoutDto(null, 5, 10, 35)));
+            null, "title", "some desc", 1, List.of(new ExerciseWorkoutDto(null, 5, 10, 35)));
 
     return Stream.of(
         Arguments.of("null", mapper.writeValueAsString(bad1)),
@@ -136,8 +136,8 @@ public class WorkoutEControllerTest extends BaseIntegrationTest {
   }
 
   private WorkoutDto getDefaultWorkoutDto() {
-    List<ExerciseForWorkoutDto> dtos = new ArrayList<>();
-    dtos.add(new ExerciseForWorkoutDto(1L, 10, 5, 1));
+    List<ExerciseWorkoutDto> dtos = new ArrayList<>();
+    dtos.add(new ExerciseWorkoutDto(1L, 10, 5, 1));
     return new WorkoutDto(null, WORKOUT_TITLE, WORKOUT_DESCRIPTION, 2, dtos);
   }
 

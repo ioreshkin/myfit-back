@@ -1,7 +1,9 @@
 package center.myfit.service;
 
 import center.myfit.entity.User;
+import center.myfit.exception.UserNotAuthenticated;
 import center.myfit.repository.UserRepository;
+import center.myfit.starter.service.UserAware;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -11,26 +13,30 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
+/** Компонент для работы с контекстом безопасности. */
 @Component
 @RequiredArgsConstructor
-public class UserAware {
-  private static final String EMAIL_FIELD = "email";
+public class UserAwareImpl implements UserAware<User> {
+
   private final UserRepository userRepository;
 
+  /** Получение пользователя из контекста безопасности. */
+  @Override
   public User getUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String email =
+    String keycloakId =
         Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
             .map(Authentication::getPrincipal)
             .filter(Jwt.class::isInstance)
             .map(Jwt.class::cast)
             .map(Jwt::getClaims)
-            .map(it -> it.get(EMAIL_FIELD))
+            .map(it -> it.get(KEYCLOAK_ID_FIELD))
             .filter(Objects::nonNull)
             .map(String.class::cast)
             .filter(StringUtils::isNotBlank)
-            .orElseThrow(() -> new RuntimeException("No token"));
-    User userByEmail = userRepository.findUserByEmail(email).get();
-    return userRepository.findUserByEmail(email).orElseThrow(() -> new RuntimeException("No user"));
+            .orElseThrow(() -> new UserNotAuthenticated("Нет токена!"));
+
+    return userRepository
+        .findUserByKeycloakId(keycloakId)
+        .orElseThrow(() -> new UserNotAuthenticated("Пользователь не найден!"));
   }
 }

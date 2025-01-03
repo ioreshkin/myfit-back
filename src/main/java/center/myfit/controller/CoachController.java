@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** Контроллер тренера. */
 @RestController
 @RequestMapping("coach")
 @Slf4j
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CoachController {
   private final UserService userService;
 
+  /** Подписаться на тренера. */
   @PostMapping("follow/{code}")
   public void follow(@PathVariable("code") Integer code) {
     userService.followCoach(code);
   }
 
+  /** Назначить тренировочную программу. */
   @PostMapping("assign-program")
   public void assignProgram(@RequestBody AssignProgramDto dto) {
     userService.assignProgram(dto);
