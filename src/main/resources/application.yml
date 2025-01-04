@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8000
 
 spring:
   liquibase: enable
@@ -8,11 +8,18 @@ spring:
     oauth2:
       resourceserver:
         jwt.issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/myfit}
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DB_URL:jdbc:postgresql://localhost:5432/app}
-    username: ${DB_USER:app}
+    username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:pass}
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBITMQ_DEFAULT_USER:fit}
+    password: ${RABBITMQ_DEFAULT_PASS:pw}
 
 
 cors:
@@ -24,6 +31,7 @@ keycloak:
   username: ${KEYCLOAK_USERNAME:admin}
   password: ${KEYCLOAK_PASSWORD:pw}
   client-id: ${KEYCLOAK_CLIENT_ID:admin-cli}
+  queue: ${KEYCLOAK_EVENT_QUEUE:keycloak_back}
 
 tuz:
   username: ${TUZ_USER:tuz}

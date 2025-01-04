@@ -21,18 +21,12 @@ public class SecurityConfig {
   /** Создание UserDetailsService с существующими пользователями. */
   @Bean
   public UserDetailsService userDetailsService() {
-    UserDetails userDetails =
-        User.withDefaultPasswordEncoder()
-            .username("admin")
-            .password("password")
-            .roles("KEYCLOAK")
-            .build();
-    UserDetails userDetails1 =
+    UserDetails technoUser =
         User.withDefaultPasswordEncoder()
             .username(properties.getUsername())
             .password(properties.getPassword())
             .roles("TUZ")
             .build();
-    return new InMemoryUserDetailsManager(userDetails, userDetails1);
+    return new InMemoryUserDetailsManager(technoUser);
   }
 }
