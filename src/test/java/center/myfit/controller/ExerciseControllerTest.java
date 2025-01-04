@@ -1,5 +1,6 @@
 package center.myfit.controller;
 
+import static center.myfit.config.utils.TestConstants.API_PREFIX;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Transactional
 class ExerciseControllerTest extends BaseIntegrationTest {
-  private static final String BASE_URL = "/exercise";
+  private static final String BASE_URL = API_PREFIX + "/exercise";
 
   public ExerciseControllerTest(WebApplicationContext context) {
     super(context);

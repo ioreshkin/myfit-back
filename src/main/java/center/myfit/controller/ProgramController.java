@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /** Контроллер тренировочных программ. */
 @RestController
-@RequestMapping("/program")
+@RequestMapping("${api-prefix}/program")
 @Slf4j
 @RequiredArgsConstructor
 public class ProgramController {

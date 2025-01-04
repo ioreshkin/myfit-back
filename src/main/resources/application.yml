@@ -1,6 +1,16 @@
 server:
   port: 8000
 
+api-prefix: /api/back
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: ${api-prefix}/swagger-ui
+    enabled: ${SWAGGER_ENABLE:true}
+  api-docs:
+    enabled: ${SWAGGER_ENABLE:true}
+
 spring:
   liquibase: enable
 

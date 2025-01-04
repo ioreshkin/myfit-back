@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Transactional
 public class WorkoutEControllerTest extends BaseIntegrationTest {
-  private static final String BASE_URL = "/workout";
+  private static final String BASE_URL = API_PREFIX + "/workout";
   private static final ObjectMapper mapper = new ObjectMapper();
 
   public WorkoutEControllerTest(WebApplicationContext context) {

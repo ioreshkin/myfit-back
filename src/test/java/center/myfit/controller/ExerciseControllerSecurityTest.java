@@ -1,6 +1,7 @@
 package center.myfit.controller;
 
 import static center.myfit.config.utils.ResourcePool.*;
+import static center.myfit.config.utils.TestConstants.API_PREFIX;
 import static center.myfit.starter.test.AbstractTestResourcePool.read;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +36,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @ActiveProfiles("test")
 @Transactional
 public class ExerciseControllerSecurityTest {
-  private static final String BASE_URL = "/exercise";
+
+  private final String BASE_URL = API_PREFIX + "/exercise";
 
   @Autowired private MockMvc mockMvc;
   @Autowired private TuzProperties properties;
