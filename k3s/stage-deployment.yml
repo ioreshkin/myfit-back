@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: stage-app
-          image: "`nexus.fitcycle.online`/myfit:1.0-SNAPSHOT"
+          image: "nexus.fitcycle.online`/myfit:1.0-SNAPSHOT"
           imagePullPolicy: Always
           ports:
             - name: http
