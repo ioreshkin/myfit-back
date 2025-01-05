@@ -41,7 +41,7 @@ keycloak:
   username: ${KEYCLOAK_USERNAME:admin}
   password: ${KEYCLOAK_PASSWORD:pw}
   client-id: ${KEYCLOAK_CLIENT_ID:admin-cli}
-  queue: ${KEYCLOAK_EVENT_QUEUE:keycloak_back}
+  queue: ${KEYCLOAK_EVENT_QUEUE:keycloak_back_q}
 
 tuz:
   username: ${TUZ_USER:tuz}
