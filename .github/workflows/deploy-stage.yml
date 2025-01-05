@@ -1,6 +1,6 @@
 name: deploy-dev
 on:
-  pull_request:
+  push:
     branches:
       - dev
 jobs:
@@ -41,3 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: docker push
         run: docker push nexus.fitcycle.online/myfit:${{ steps.version-extractor.outputs.version }}
+      - uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+      - run: kubectl apply -f k3s/stage-deployment.yml

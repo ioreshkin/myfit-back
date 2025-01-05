@@ -2,8 +2,8 @@ name: maven-test
 on:
   pull_request:
     branches:
-      - main1
-      - dev1
+      - main
+      - dev
 jobs:
   build:
     runs-on: ubuntu-latest
