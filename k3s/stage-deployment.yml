@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: stage-app
-          image: "nexus.fitcycle.online/myfit:1.0-SNAPSHOT"
+          image: "`nexus.fitcycle.online`/myfit:1.0-SNAPSHOT"
           imagePullPolicy: Always
           ports:
             - name: http
@@ -31,7 +31,7 @@ spec:
             - name: ISSUER_URI
               value: "https://auth.fitcycle.ru/realms/fitcycle-stage"
             - name: DB_URL
-              value: "pg-app-stage"
+              value: "jdbc:postgresql://pg-app-stage:5432/postgres"
             - name: DB_USER
               valueFrom:
                 configMapKeyRef:
