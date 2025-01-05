@@ -41,13 +41,13 @@ services:
       postgres:
         condition: service_healthy
 
-  rabbitmq:
-    image: nexus.fitcycle.online/rabbit
-    container_name: rabbitmq
-    env_file: .env-rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+#  rabbitmq:
+#    image: nexus.fitcycle.online/rabbit
+#    container_name: rabbitmq
+#    env_file: .env-rabbitmq
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
 
   minio:
     image: nexus.fitcycle.online/minio

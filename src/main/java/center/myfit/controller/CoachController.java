@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /** Контроллер тренера. */
 @RestController
-@RequestMapping("coach")
+@RequestMapping("${api-prefix}/coach")
 @Slf4j
 @RequiredArgsConstructor
 public class CoachController {

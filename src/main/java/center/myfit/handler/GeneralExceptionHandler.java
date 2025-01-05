@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /** Глобальный обработчик исключений. */
@@ -17,18 +18,21 @@ public class GeneralExceptionHandler {
 
   /** Обработчик всех необработанных исключений. */
   @ExceptionHandler(Exception.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ResponseEntity<ErrorDto> handle(Exception e) {
     return getResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   /** Обработчик исключения валидации. */
   @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<ErrorDto> handle(MethodArgumentNotValidException e) {
     return getResponseEntity(e, HttpStatus.BAD_REQUEST);
   }
 
   /** Обработчик исключения пользователь не авторизаван. */
   @ExceptionHandler(UserNotAuthenticated.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
   public ResponseEntity<ErrorDto> handle(UserNotAuthenticated e) {
     return getResponseEntity(e, HttpStatus.FORBIDDEN);
   }

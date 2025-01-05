@@ -14,4 +14,5 @@ public class KeycloakProperties {
   private String username;
   private String password;
   private String clientId;
+  private String queue;
 }

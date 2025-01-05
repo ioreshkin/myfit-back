@@ -13,6 +13,7 @@
         <keycloak-admin.version>23.0.6</keycloak-admin.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <myfit-starter.version>0.8</myfit-starter.version>
+        <openapi.version>2.6.0</openapi.version>
     </properties>
 
     <parent>
@@ -38,8 +39,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,6 +55,12 @@
             <artifactId>myfit-spring-boot-starter</artifactId>
             <version>${myfit-starter.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${openapi.version}</version>
+        </dependency>
+
         <!--        database-->
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -69,6 +76,10 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-admin-client</artifactId>
             <version>${keycloak-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>

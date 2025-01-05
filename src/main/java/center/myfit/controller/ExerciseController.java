@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /** Контроллер упражнений. */
 @RestController
-@RequestMapping("/exercise")
+@RequestMapping("${api-prefix}/exercise")
 @Slf4j
 @RequiredArgsConstructor
 public class ExerciseController {
