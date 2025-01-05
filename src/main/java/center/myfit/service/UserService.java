@@ -1,5 +1,6 @@
 package center.myfit.service;
 
+import center.myfit.config.KeycloakProperties;
 import center.myfit.dto.AssignProgramDto;
 import center.myfit.dto.EventDto;
 import center.myfit.entity.CoachUser;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
   private final Keycloak keycloak;
+  private final KeycloakProperties properties;
   private final UserRepository userRepository;
   private final CoachUserRepository coachUserRepository;
   private final ProgramRepository programRepository;
@@ -32,16 +34,18 @@ public class UserService {
   /** Создание пользователя. */
   @Async
   public void createUser(EventDto dto) {
-    if (dto.type().equals("LOGIN") || dto.type().equals("LOGOUT")) {
+    if ("LOGIN".equals(dto.type())
+        && userRepository.existsByKeycloakId(dto.userId())) {
       return;
     }
+
     int invite;
     do {
       invite = ThreadLocalRandom.current().nextInt(100000, 9999999);
     } while (!userRepository.existsByInvite(invite));
 
     UserRepresentation representation =
-        keycloak.realm("myfit").users().get(dto.userId()).toRepresentation();
+        keycloak.realm(properties.getRealm()).users().get(dto.userId()).toRepresentation();
     User user = new User();
     user.setFirstName(representation.getFirstName());
     user.setLastName(representation.getLastName());

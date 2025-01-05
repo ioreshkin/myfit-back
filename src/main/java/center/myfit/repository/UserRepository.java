@@ -23,6 +23,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findUserByKeycloakId(String keycloakId);
 
   /**
+   * Проверка существования пользователя по keycloakId.
+   *
+   * @param keycloakId keycloakId
+   * @return true если пользователь найден
+   */
+  boolean existsByKeycloakId(String keycloakId);
+
+  /**
    * Проверка существования пользователя по invite.
    *
    * @param invite invite
