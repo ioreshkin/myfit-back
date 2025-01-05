@@ -24,15 +24,10 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
-      - name: extract version
-        id: version-extractor
-        uses: dostonhamrakulov/maven-artifact-version-extractor@v1.0
-        with:
-          file_path: ${{ github.workspace }}/pom.xml
       - name: Get the output version
         run: echo "The found version ${{ steps.version-extractor.outputs.version }}"
-#      - name: test
-#        run: mvn test
-#        env:
-#          PACKAGE_USERNAME: ${{ secrets.PACKAGE_USERNAME }}
-#          PACKAGE_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
+      - name: test
+        run: mvn test
+        env:
+          PACKAGE_USERNAME: ${{ secrets.PACKAGE_USERNAME }}
+          PACKAGE_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}

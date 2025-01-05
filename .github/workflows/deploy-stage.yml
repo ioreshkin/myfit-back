@@ -1,10 +1,10 @@
-name: maven-test
+name: deploy-dev
 on:
   push:
     branches:
       - dev
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -23,19 +23,21 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
-      - name: test
-        run: mvn test
-        env:
-          PACKAGE_USERNAME: ${{ secrets.PACKAGE_USERNAME }}
-          PACKAGE_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
       - name: build image
-        run: mvn spring-boot:build-image -DskipTests
+        run: mvn spring-boot:build-image
         env:
           PACKAGE_USERNAME: ${{ secrets.PACKAGE_USERNAME }}
           PACKAGE_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
+      - name: extract version
+        id: version-extractor
+        uses: dostonhamrakulov/maven-artifact-version-extractor@v1.0
+        with:
+          file_path: ${{ github.workspace }}/pom.xml
       - name: docker login
         uses: docker/login-action@v3
         with:
           registry: nexus.fitcycle.online
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: docker push
+        run: docker push nexus.fitcycle.online/myfit:${{ steps.version-extractor.outputs.version }}
