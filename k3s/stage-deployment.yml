@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stage-app
+  namespace: stage
+  labels:
+    app: stage-app
+spec:
+  replicas: 1
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: stage-app
+  template:
+    metadata:
+      labels:
+        app: stage-app
+    spec:
+      containers:
+        - name: stage-app
+          image: "nexus.fitcycle.online/myfit:1.0-SNAPSHOT"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: SWAGGER_ENABLE
+              value: "true"
+            - name: ISSUER_URI
+              value: "https://auth.fitcycle.ru/realms/fitcycle-stage"
+            - name: DB_URL
+              value: "pg-app-stage"
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: pg-app-stage
+                  key: postgres.user
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: pg-app-stage
+                  key: postgres.password
+            - name: RABBIT_HOST
+              value: "rabbit-0.rabbit.rabbit.svc.cluster.local"
+            - name: RABBIT_PORT
+              value: "5672"
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: rabbit.user
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: rabbit.password
+            - name: CORS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: cors.url
+            - name: KEYCLOAK_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: keycloak.url
+            - name: KEYCLOAK_REALM
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: keycloak.realm
+            - name: KEYCLOAK_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: keycloak.username
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: keycloak.password
+            - name: KEYCLOAK_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: keycloak.client-id
+            - name: KEYCLOAK_EVENT_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: keycloak.queue
+            - name: TUZ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: tuz.user
+            - name: TUZ_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: tuz.password
