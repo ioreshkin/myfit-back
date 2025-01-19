@@ -6,6 +6,7 @@ import static center.myfit.starter.test.AbstractTestResourcePool.read;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -64,12 +65,15 @@ public class ExerciseControllerSecurityTest {
 
     assertNotNull(exercise);
     assertAll(
+        () -> assertNotNull(exercise.getId()),
         () -> assertEquals(expected.getTitle(), exercise.getTitle()),
         () -> assertEquals(expected.getDescription(), exercise.getDescription()),
         () -> assertEquals(expected.getVideoUrl(), exercise.getVideoUrl()),
         () ->
             assertEquals(expected.getOwner().getKeycloakId(), exercise.getOwner().getKeycloakId()),
-        () -> assertEquals(expected.getImage().getOriginal(), exercise.getImage().getOriginal()));
+        () -> assertEquals(expected.getImage().getOriginal(), exercise.getImage().getOriginal()),
+        () -> assertNull(exercise.getImage().getMobile()),
+        () -> assertNull(exercise.getImage().getDesktop()));
   }
 
   @Test

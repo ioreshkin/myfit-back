@@ -4,6 +4,8 @@
   "videoUrl": "https://you.tube/iuytuoy",
   "keycloakId": "keyclId",
   "image": {
-    "original": "originalurl.png"
+    "original": "originalurl.png",
+    "mobile": "test",
+    "desktop": "test"
   }
 }

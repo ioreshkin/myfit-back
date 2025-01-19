@@ -1,7 +1,7 @@
 package center.myfit.handler;
 
-import center.myfit.exception.UserNotAuthenticated;
 import center.myfit.starter.dto.ErrorDto;
+import center.myfit.starter.exception.UnauthorizedException;
 import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,9 +31,9 @@ public class GeneralExceptionHandler {
   }
 
   /** Обработчик исключения пользователь не авторизаван. */
-  @ExceptionHandler(UserNotAuthenticated.class)
+  @ExceptionHandler(UnauthorizedException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
-  public ResponseEntity<ErrorDto> handle(UserNotAuthenticated e) {
+  public ResponseEntity<ErrorDto> handle(UnauthorizedException e) {
     return getResponseEntity(e, HttpStatus.FORBIDDEN);
   }
 
