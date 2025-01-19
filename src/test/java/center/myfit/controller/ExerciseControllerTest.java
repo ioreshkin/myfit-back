@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import center.myfit.BaseIntegrationTest;
+import center.myfit.BaseWebIntegrationTest;
 import center.myfit.starter.test.WithMockUser;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.context.WebApplicationContext;
 
 @Transactional
-class ExerciseControllerTest extends BaseIntegrationTest {
+class ExerciseControllerTest extends BaseWebIntegrationTest {
   private static final String BASE_URL = API_PREFIX + "/exercise";
 
   public ExerciseControllerTest(WebApplicationContext context) {

@@ -19,5 +19,6 @@ public class KeycloakListener {
   public void eventHandler(EventDto dto) {
     log.info("Получено событие кейклока {}", dto.toString());
     userService.createUser(dto);
+    log.info("Пользователь успешно создан. keycloakId = {}", dto.userId());
   }
 }
