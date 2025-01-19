@@ -101,3 +101,8 @@ spec:
                 configMapKeyRef:
                   name: app-stage
                   key: tuz.password
+            - name: STAGE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: stage.name
