@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import center.myfit.BaseIntegrationTest;
+import center.myfit.BaseWebIntegrationTest;
 import center.myfit.dto.ExerciseWorkoutDto;
 import center.myfit.dto.WorkoutDto;
 import center.myfit.starter.test.WithMockUser;
@@ -26,7 +26,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.context.WebApplicationContext;
 
 @Transactional
-public class WorkoutEControllerTest extends BaseIntegrationTest {
+public class WorkoutEControllerTest extends BaseWebIntegrationTest {
   private static final String BASE_URL = API_PREFIX + "/workout";
   private static final ObjectMapper mapper = new ObjectMapper();
 

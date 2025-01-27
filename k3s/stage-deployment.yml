@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: stage-app
-          image: "nexus.fitcycle.online/myfit:1.1-SNAPSHOT"
+          image: "nexus.fitcycle.online/myfit:1.2-SNAPSHOT"
           imagePullPolicy: Always
           ports:
             - name: http
@@ -101,3 +101,8 @@ spec:
                 configMapKeyRef:
                   name: app-stage
                   key: tuz.password
+            - name: STAGE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-stage
+                  key: stage.name

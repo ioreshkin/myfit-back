@@ -11,6 +11,7 @@ import center.myfit.repository.CoachUserRepository;
 import center.myfit.repository.ProgramRepository;
 import center.myfit.repository.ProgramUserRepository;
 import center.myfit.repository.UserRepository;
+import center.myfit.starter.exception.UnauthorizedException;
 import center.myfit.starter.service.UserAware;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,7 @@ public class UserService {
   /** Создание пользователя. */
   @Async
   public void createUser(EventDto dto) {
-    if ("LOGIN".equals(dto.type())
-        && userRepository.existsByKeycloakId(dto.userId())) {
+    if ("LOGIN".equals(dto.type()) && userRepository.existsByKeycloakId(dto.userId())) {
       return;
     }
 
@@ -128,5 +128,18 @@ public class UserService {
           }
         };
     programUserRepository.save(programUser);
+  }
+
+  /**
+   * Получение пользователя по keycloakId.
+   *
+   * @param keycloakId - keycloakId
+   * @return {@link User}
+   * @throws  UnauthorizedException если пользователь не найден
+   */
+  public User getUser(String keycloakId) {
+    return userRepository
+        .findUserByKeycloakId(keycloakId)
+        .orElseThrow(() -> new UnauthorizedException("Пользователь не найден!"));
   }
 }

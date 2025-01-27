@@ -1,6 +1,6 @@
 server:
   port: 80
-
+stage: test
 spring:
   liquibase: enable
 

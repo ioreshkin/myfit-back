@@ -13,7 +13,12 @@ public interface ExerciseMapper {
   /** Получение ExerciseDto. */
   ExerciseDto map(Exercise exercise);
 
-  /** Получение Exercise. */
+  /** Получение Exercise для создания нового. */
   @Mapping(target = "id", source = "exercise.id")
-  Exercise map(ExerciseDto exercise, User owner);
+  @Mapping(target = "owner", source = "owner")
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "image.desktop", ignore = true)
+  @Mapping(target = "image.mobile", ignore = true)
+  Exercise mapToCreate(ExerciseDto exercise, User owner);
 }
