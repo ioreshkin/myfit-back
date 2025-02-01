@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stage-app
+  name: stage-myfit-back
   namespace: stage
   labels:
-    app: stage-app
+    app: stage-myfit-back
 spec:
   replicas: 1
   strategy:
     type: "Recreate"
   selector:
     matchLabels:
-      app: stage-app
+      app: stage-myfit-back
   template:
     metadata:
       labels:
-        app: stage-app
+        app: stage-myfit-back
     spec:
       containers:
-        - name: stage-app
+        - name: stage-myfit-back
           image: "nexus.fitcycle.online/myfit:1.2-SNAPSHOT"
           imagePullPolicy: Always
           ports:
@@ -49,60 +49,60 @@ spec:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: rabbit.user
             - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: rabbit.password
             - name: CORS_URL
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: cors.url
             - name: KEYCLOAK_URL
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: keycloak.url
             - name: KEYCLOAK_REALM
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: keycloak.realm
             - name: KEYCLOAK_USERNAME
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: keycloak.username
             - name: KEYCLOAK_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: keycloak.password
             - name: KEYCLOAK_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: keycloak.client-id
             - name: KEYCLOAK_EVENT_QUEUE
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: keycloak.queue
             - name: TUZ_USER
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: tuz.user
             - name: TUZ_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: tuz.password
             - name: STAGE_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: app-stage
+                  name: stage-myfit-back
                   key: stage.name
