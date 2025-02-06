@@ -15,6 +15,7 @@ import lombok.Setter;
 public class WorkoutExercise extends BaseEntity {
   private Integer repeats;
   private Integer sets;
+  private Integer weight;
   private Integer orderNumber;
 
   @ManyToOne

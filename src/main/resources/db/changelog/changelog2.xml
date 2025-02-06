@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="alter_table_workout" author="pavel">
+        <dropColumn tableName="workout" columnName="difficulty"/>
+        <addColumn tableName="workout">
+            <column name="picture_url" type="varchar"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="alter_table_image" author="pavel">
+        <addColumn tableName="image">
+            <column name="workout_id" type="bigint">
+                <constraints nullable="false"  unique="true"
+                             foreignKeyName="fk_image_workout" references="workout(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="alter_table_workout_exercise" author="pavel">
+        <addColumn tableName="workout_exercise">
+            <column name="weight" type="INT"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <keycloak-admin.version>23.0.6</keycloak-admin.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <myfit-starter.version>0.8</myfit-starter.version>
+        <myfit-starter.version>0.10</myfit-starter.version>
         <openapi.version>2.6.0</openapi.version>
         <maven.model.version>3.9.9</maven.model.version>
     </properties>
