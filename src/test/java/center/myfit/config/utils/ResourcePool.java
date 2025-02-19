@@ -19,4 +19,6 @@ public class ResourcePool extends AbstractTestResourcePool {
           new ClassPathResource("json/exercise/empty-description-exercise.json");
   public static final Resource large_title_exercise =
           new ClassPathResource("json/exercise/large-title-exercise.json");
+  public static final Resource create_workout =
+      new ClassPathResource("json/exercise/workout/workout.json");
 }

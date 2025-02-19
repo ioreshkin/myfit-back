@@ -17,7 +17,6 @@ import lombok.Setter;
 public class Exercise extends BaseEntity {
   private String title;
   private String description;
-  private String pictureUrl;
   private String videoUrl;
 
   @ManyToOne

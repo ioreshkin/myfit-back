@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @DiscriminatorValue("workout_image")
-public class WorkoutImage extends Image{
+public class WorkoutImage extends Image {
   @OneToOne
   @JoinColumn(name = "workout_id", referencedColumnName = "id")
   private Workout workout;

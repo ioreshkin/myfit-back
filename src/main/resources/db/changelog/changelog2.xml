@@ -4,17 +4,24 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="alter_table_workout" author="pavel">
-        <dropColumn tableName="workout" columnName="difficulty"/>
+    <changeSet id="alter_table_workout_add_image_drop_difficulty" author="pavel">
         <addColumn tableName="workout">
-            <column name="picture_url" type="varchar"/>
+            <column name="image_id" type="bigint"/>
         </addColumn>
+        <dropColumn tableName="workout" columnName="difficulty"/>
+    </changeSet>
+
+    <changeSet id="alter_table_exercise_add_image_drop_picture_url" author="pavel">
+        <addColumn tableName="exercise">
+            <column name="image_id" type="bigint"/>
+        </addColumn>
+        <dropColumn tableName="exercise" columnName="picture_url"/>
     </changeSet>
 
     <changeSet id="alter_table_image" author="pavel">
         <addColumn tableName="image">
             <column name="workout_id" type="bigint">
-                <constraints nullable="false"  unique="true"
+                <constraints nullable="true"  unique="true"
                              foreignKeyName="fk_image_workout" references="workout(id)"/>
             </column>
         </addColumn>
@@ -22,7 +29,9 @@
 
     <changeSet id="alter_table_workout_exercise" author="pavel">
         <addColumn tableName="workout_exercise">
-            <column name="weight" type="INT"/>
+            <column name="weight" type="float"/>
         </addColumn>
+        <dropColumn tableName="workout_exercise" columnName="sets"/>
+        <renameColumn tableName="workout_exercise" oldColumnName="order_number" newColumnName="orders" columnDataType="INT"/>
     </changeSet>
 </databaseChangeLog>

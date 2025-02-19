@@ -17,7 +17,6 @@ import lombok.Setter;
 public class Workout extends BaseEntity {
   private String title;
   private String description;
-  private String pictureUrl;
 
   @ManyToOne
   @JoinColumn(name = "owner_id")
@@ -25,4 +24,5 @@ public class Workout extends BaseEntity {
 
   @OneToOne(mappedBy = "workout", cascade = CascadeType.ALL)
   private WorkoutImage image;
+
 }
