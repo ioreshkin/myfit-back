@@ -30,38 +30,37 @@ public class WorkoutService {
   private final WorkoutExerciseMapper workoutExerciseMapper;
   private final UserService userService;
 
-  /** Создание тренировки. */
+  /**
+   * Создание тренировки.
+   */
   @Transactional
-  public WorkoutDto  create(WorkoutDto dto) {
-    //TODO объясни пожалуйста разницу в варианте когда так
-    //это реализовано в ExerciseController +
-    // тех юзер, здесь так же сделать??
+  public WorkoutDto create(WorkoutDto dto) {
 
-    log.info("пробуем создать юзера ");
-    //User user = userAware.getUser();
+    log.info("пробуем найти пользователя в базе ");
     User user = userService.getUser(dto.keycloakId());
-    log.info("создан юзер {}", user.toString());
+    log.info("пользователь найден {}", user.toString());
     Workout workout = workoutMapper.map(dto, user);
 
     WorkoutImage workoutImage = new WorkoutImage();
     workoutImage.setOriginal(dto.image().original());
     workout.setImage(workoutImage);
     workoutImage.setWorkout(workout);
-
     log.info("создан воркаут {}", workout.toString());
-    Workout savedWorkout = workoutRepository.save(workout); // тут воркаукт вместе с вернувшимся id
-    log.info("сохранено воркаут {}", workout);
+
+    Workout savedWorkout = workoutRepository.save(workout);
+    log.info("сохранено воркаут, присвоен id{}", workout.toString());
 
     List<WorkoutExercise> workoutExercises = workoutExerciseMapper.map(dto, savedWorkout);
-    log.info("Вот такой  лист сейчас уйдет в базу{}", workoutExercises.toString());
+    log.info("набор упражнений в тренировке готов к сохранению в бд{}",
+            workoutExercises.toString());
     workoutExerciseRepository.saveAll(workoutExercises);
 
     return workoutMapper.map(savedWorkout, dto);
   }
 
-  /** Получить все тренировки. */
-//  public List<WorkoutDto> getAll() {
-//    User user = userAware.getUser();
-//    return workoutRepository.findAllByOwner(user).stream().map(workoutMapper::map).toList();
-//  }
+  //  /** Получить все тренировки. */
+  //  public List<WorkoutDto> getAll() {
+  //    User user = userAware.getUser();
+  //    return workoutRepository.findAllByOwner(user).stream().map(workoutMapper::map).toList();
+  //  }
 }

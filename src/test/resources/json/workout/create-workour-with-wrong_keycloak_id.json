@@ -1,0 +1,45 @@
+{
+  "id": null,
+  "keycloakId": "wrongGeyclId",
+  "title": "workout title",
+  "exercises": [
+    {
+      "exerciseId": 1,
+      "order": 1,
+      "iterations": [
+        {
+          "repeats": 10,
+          "weight": 50.0
+        },
+        {
+          "repeats": 10,
+          "weight": 60.0
+        },
+        {
+          "repeats": 10,
+          "weight": 70.0
+        }
+      ]
+    },
+    {
+      "exerciseId": 2,
+      "order": 2,
+      "iterations": [
+        {
+          "repeats": 5,
+          "weight": 10.0
+        },
+        {
+          "repeats": 5,
+          "weight": 20.0
+        }
+      ]
+    }
+  ],
+  "description": "workout description",
+  "image": {
+    "original": "https://minio/original-image.jpg",
+    "mobile": null,
+    "desktop": null
+  }
+}

@@ -2,9 +2,7 @@ package center.myfit.mapper;
 
 import center.myfit.entity.User;
 import center.myfit.entity.Workout;
-import center.myfit.entity.WorkoutImage;
 import center.myfit.starter.dto.WorkoutDto;
-import org.glassfish.jaxb.core.v2.TODO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -21,12 +19,6 @@ public interface WorkoutMapper {
   @Mapping(target = "description", source = "dto.description")
   @Mapping(target = "image", source = "dto.image")
   WorkoutDto map(Workout workout, WorkoutDto dto);
-
-
-
-
-
-
 
   /** Получение Workout. */
   @Mapping(target = "id", source = "workout.id")

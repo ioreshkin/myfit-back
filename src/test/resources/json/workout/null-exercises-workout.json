@@ -1,0 +1,12 @@
+{
+  "id": null,
+  "keycloakId": "keyclId",
+  "title": "Valid Title",
+  "exercises": null,
+  "description": "workout description",
+  "image": {
+    "original": "https://minio/original-image.jpg",
+    "mobile": null,
+    "desktop": null
+  }
+}

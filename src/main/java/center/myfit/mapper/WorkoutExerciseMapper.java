@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-
 /**
  * Получение WorkoutExercise.
  */
@@ -25,8 +24,6 @@ public class WorkoutExerciseMapper {
    * Маппер для WorkoutExercise.
    */
   public List<WorkoutExercise> map(WorkoutDto dto, Workout workout) {
-    log.info("начало маппинга из воркаутДТО и воркаутСохр в лист упраженний для сохранения в бд");
-
     int[] k = new int[] {1};
     List<WorkoutExercise> list = dto.exercises().stream()
         .flatMap(exerciseDto -> {
@@ -43,9 +40,9 @@ public class WorkoutExerciseMapper {
           return exerciseDto.iterations().stream()
               .map(iterationDto  -> {
                 WorkoutExercise workoutExercise = new WorkoutExercise();
-                workoutExercise.setRepeats(iterationDto .repeats());
-                workoutExercise.setWeight(iterationDto .weight());
-                workoutExercise.setOrders(k[0]++); // тут не верный маппинг
+                workoutExercise.setRepeats(iterationDto.repeats());
+                workoutExercise.setWeight(iterationDto.weight());
+                workoutExercise.setOrders(k[0]++);
                 workoutExercise.setWorkout(workout);
                 workoutExercise.setExercise(exercise);
                 return workoutExercise;
