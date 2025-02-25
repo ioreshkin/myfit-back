@@ -1,0 +1,23 @@
+{
+  "id": null,
+  "keycloakId": "keyclId",
+  "title": "AB",
+  "exercises": [
+    {
+      "exerciseId": 1,
+      "order": 1,
+      "iterations": [
+        {
+          "repeats": 10,
+          "weight": 50.0
+        }
+      ]
+    }
+  ],
+  "description": "workout description",
+  "image": {
+    "original": "https://minio/original-image.jpg",
+    "mobile": null,
+    "desktop": null
+  }
+}
