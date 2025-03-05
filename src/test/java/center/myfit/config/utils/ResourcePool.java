@@ -60,5 +60,9 @@ public class ResourcePool extends AbstractTestResourcePool {
     public static final Resource null_weight =
             new ClassPathResource("json/workout/exerciseWorkout/iteration/null-weight.json");
     public static final Resource negative_weight =
-            new ClassPathResource("json/workout/exerciseWorkout/iteration/negative-weight.json");;
+            new ClassPathResource("json/workout/exerciseWorkout/iteration/negative-weight.json");
+
+    public static final Resource expected_workout_list =
+            new ClassPathResource("json/workout/expected_workouts.json");
+
 }

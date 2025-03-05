@@ -1,5 +1,5 @@
 insert into workout (title, description, owner_id, image_id)
-values ('Присед', 'Приседаем', 1, 1);
+values ('Тренировка ног', 'с прогрессией', 1, 1);
 
 insert into workout (title, description, owner_id, image_id)
-values ('Отжимания', 'Отжимаемся', 1, 2);
+values ('Тренировка груди', 'с акцентом на растяжку', 1, 2);

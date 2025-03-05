@@ -3,7 +3,6 @@ package center.myfit.service;
 import center.myfit.entity.User;
 import center.myfit.entity.Workout;
 import center.myfit.entity.WorkoutExercise;
-import center.myfit.entity.WorkoutImage;
 import center.myfit.mapper.WorkoutExerciseMapper;
 import center.myfit.mapper.WorkoutMapper;
 import center.myfit.repository.ExerciseRepository;
@@ -34,17 +33,13 @@ public class WorkoutService {
    * Создание тренировки.
    */
   @Transactional
-  public WorkoutDto create(WorkoutDto dto) {
+  public WorkoutDto createWorkout(WorkoutDto dto) {
 
-    log.info("пробуем найти пользователя в базе ");
+    log.info("проверяем аутентифицирован ли пользователь");
     User user = userService.getUser(dto.keycloakId());
     log.info("пользователь найден {}", user.toString());
     Workout workout = workoutMapper.map(dto, user);
 
-    WorkoutImage workoutImage = new WorkoutImage();
-    workoutImage.setOriginal(dto.image().original());
-    workout.setImage(workoutImage);
-    workoutImage.setWorkout(workout);
     log.info("создан воркаут {}", workout.toString());
 
     Workout savedWorkout = workoutRepository.save(workout);
@@ -58,9 +53,11 @@ public class WorkoutService {
     return workoutMapper.map(savedWorkout, dto);
   }
 
-  //  /** Получить все тренировки. */
-  //  public List<WorkoutDto> getAll() {
-  //    User user = userAware.getUser();
-  //    return workoutRepository.findAllByOwner(user).stream().map(workoutMapper::map).toList();
-  //  }
+  /** Получить все тренировки. */
+  public List<WorkoutDto> getAll() {
+    log.info("проверяем аутентифицирован ли пользователь");
+    User user = userAware.getUser();
+    return workoutRepository.findAllByOwner(user).stream().map(workoutExerciseMapper::map).toList();
+  }
 }
+

@@ -1,4 +1,4 @@
-package center.myfit.controller;
+package center.myfit.controller.workout;
 
 import java.util.stream.Stream;
 import center.myfit.config.TuzProperties;

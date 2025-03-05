@@ -1,4 +1,4 @@
-package center.myfit.controller;
+package center.myfit.controller.exercise;
 
 import static center.myfit.config.utils.ResourcePool.*;
 import static center.myfit.config.utils.TestConstants.API_PREFIX;
