@@ -16,15 +16,38 @@ spec:
     metadata:
       labels:
         app: stage-myfit-back
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/actuator/prometheus'
+        prometheus.io/port: '8000'
     spec:
       containers:
         - name: stage-myfit-back
-          image: "nexus.fitcycle.online/myfit:1.2-SNAPSHOT"
+          image: "docker.fitcycle.ru/myfit:1.3-SNAPSHOT"
           imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8000
               protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 10
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 10
+            httpGet:
+              path: /actuator/health
+              port: http
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1000Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
           env:
             - name: SWAGGER_ENABLE
               value: "true"

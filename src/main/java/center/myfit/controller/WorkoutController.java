@@ -1,11 +1,12 @@
 package center.myfit.controller;
 
-import center.myfit.dto.WorkoutDto;
 import center.myfit.service.WorkoutService;
+import center.myfit.starter.dto.WorkoutDto;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +23,10 @@ public class WorkoutController {
 
   /** Создание тренровки. */
   @PostMapping
+  @PreAuthorize("hasRole('TUZ')")
   public WorkoutDto createWorkout(@RequestBody @Valid WorkoutDto dto) {
-    return workoutService.create(dto);
+    log.info("Получен запрос на создание тренировки {}", dto.toString());
+    return workoutService.createWorkout(dto);
   }
 
   /** Получить все трпенировки. */

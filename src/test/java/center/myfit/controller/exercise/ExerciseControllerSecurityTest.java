@@ -1,4 +1,4 @@
-package center.myfit.controller;
+package center.myfit.controller.exercise;
 
 import static center.myfit.config.utils.ResourcePool.*;
 import static center.myfit.config.utils.TestConstants.API_PREFIX;
@@ -46,6 +46,14 @@ public class ExerciseControllerSecurityTest {
   @SpyBean private ExerciseRepository repository;
 
   @Captor private ArgumentCaptor<Exercise> captor;
+
+  private static Stream<Arguments> badExerciseDto() {
+    return Stream.of(
+        Arguments.of("null", getString(empty_exercise)),
+        Arguments.of("emptyTitle", getString(empty_title_exercise)),
+        Arguments.of("emptyDescription", getString(empty_description_exercise)),
+        Arguments.of("LargeTitle", getString(large_title_exercise)));
+  }
 
   @Test
   @Sql(value = "/sql/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -109,13 +117,5 @@ public class ExerciseControllerSecurityTest {
                 .content(json)
                 .contentType(APPLICATION_JSON))
         .andExpect(status().isBadRequest());
-  }
-
-  private static Stream<Arguments> badExerciseDto() {
-    return Stream.of(
-        Arguments.of("null", getString(empty_exercise)),
-        Arguments.of("emptyTitle", getString(empty_title_exercise)),
-        Arguments.of("emptyDescription", getString(empty_description_exercise)),
-        Arguments.of("LargeTitle", getString(large_title_exercise)));
   }
 }

@@ -1,0 +1,10 @@
+{
+  "exerciseId": null,
+  "order": 1,
+  "iterations": [
+    {
+      "repeats": 10,
+      "weight": 50
+    }
+  ]
+}

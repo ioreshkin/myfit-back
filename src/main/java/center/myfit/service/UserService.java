@@ -135,7 +135,7 @@ public class UserService {
    *
    * @param keycloakId - keycloakId
    * @return {@link User}
-   * @throws  UnauthorizedException если пользователь не найден
+   * @throws UnauthorizedException если пользователь не найден
    */
   public User getUser(String keycloakId) {
     return userRepository

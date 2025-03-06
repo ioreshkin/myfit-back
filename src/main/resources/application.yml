@@ -1,18 +1,25 @@
 server:
   port: 8000
+#  поменять наверно раз работает сервис oauth2: тоже на 8080
+
 
 api-prefix: /api/back
-stage: ${STAGE_NAME}
+stage: ${STAGE_NAME:stage}
 
-springdoc:
-  swagger-ui:
-    disable-swagger-default-url: true
-    path: ${api-prefix}/swagger-ui
-    enabled: ${SWAGGER_ENABLE:true}
-  api-docs:
-    enabled: ${SWAGGER_ENABLE:true}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
 
 spring:
+  application:
+    name: myfit-back
+
   liquibase: enable
 
   security:
@@ -32,6 +39,14 @@ spring:
     username: ${RABBITMQ_DEFAULT_USER:fit}
     password: ${RABBITMQ_DEFAULT_PASS:pw}
 
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: ${api-prefix}/swagger-ui
+    enabled: ${SWAGGER_ENABLE:true}
+  api-docs:
+    enabled: ${SWAGGER_ENABLE:true}
+    path: ${api-prefix}/api-docs
 
 cors:
   url: ${CORS_URL:http://localhost:3000}
