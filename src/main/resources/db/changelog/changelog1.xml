@@ -1,133 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="create_table_users" author="ilya">
         <sql>
-            CREATE TABLE users (
-            id bigserial primary key,
-            first_name varchar not null,
-            last_name varchar not null,
-            email varchar unique not null,
-            keycloak_id varchar not null unique,
-            invite int not null unique,
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE users
+            (
+                id          bigserial primary key,
+                first_name  varchar        not null,
+                last_name   varchar        not null,
+                email       varchar unique not null,
+                keycloak_id varchar        not null unique,
+                invite      int            not null unique,
+                created_at  timestamp default current_timestamp,
+                updated_at  timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_exercise" author="ilya">
         <sql>
-            CREATE TABLE exercise (
-            id bigserial primary key,
-            title varchar not null,
-            description text not null,
-            picture_url varchar,
-            video_url varchar,
-            owner bigint references users(id),
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE exercise
+            (
+                id          bigserial primary key,
+                title       varchar not null,
+                description text    not null,
+                picture_url varchar,
+                video_url   varchar,
+                owner       bigint references users (id),
+                created_at  timestamp default current_timestamp,
+                updated_at  timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_image" author="serg">
         <sql>
-            CREATE TABLE image (
-            id bigserial primary key,
-            image_type varchar,
-            original varchar,
-            desktop varchar,
-            mobile varchar,
-            exercise_id bigint unique references exercise(id),
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE image
+            (
+                id          bigserial primary key,
+                image_type  varchar,
+                original    varchar,
+                desktop     varchar,
+                mobile      varchar,
+                exercise_id bigint unique references exercise (id),
+                created_at  timestamp default current_timestamp,
+                updated_at  timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_workout" author="ilya">
         <sql>
-            CREATE TABLE workout (
-            id bigserial primary key,
-            title varchar not null,
-            description text not null,
-            difficulty int not null,
-            owner_id bigint references users(id),
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE workout
+            (
+                id          bigserial primary key,
+                title       varchar not null,
+                description text    not null,
+                difficulty  int     not null,
+                owner_id    bigint references users (id),
+                created_at  timestamp default current_timestamp,
+                updated_at  timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_program" author="ilya">
         <sql>
-            CREATE TABLE program (
-            id bigserial primary key,
-            title varchar not null,
-            description text,
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE program
+            (
+                id          bigserial primary key,
+                title       varchar not null,
+                description text,
+                created_at  timestamp default current_timestamp,
+                updated_at  timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_coach_user" author="ilya">
         <sql>
-            CREATE TABLE coach_user (
-            id bigserial primary key,
-            coach_id bigint references users(id),
-            follower_id bigint references users(id),
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE coach_user
+            (
+                id          bigserial primary key,
+                coach_id    bigint references users (id),
+                follower_id bigint references users (id),
+                created_at  timestamp default current_timestamp,
+                updated_at  timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_workout_exercise" author="ilya">
         <sql>
-            CREATE TABLE workout_exercise (
-            id bigserial primary key,
-            workout_id bigint references workout(id),
-            exercise_id bigint references exercise(id),
-            repeats int not null,
-            sets int not null,
-            order_number int not null,
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE workout_exercise
+            (
+                id           bigserial primary key,
+                workout_id   bigint references workout (id),
+                exercise_id  bigint references exercise (id),
+                repeats      int not null,
+                sets         int not null,
+                order_number int not null,
+                created_at   timestamp default current_timestamp,
+                updated_at   timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_program_user" author="ilya">
         <sql>
-            CREATE TABLE program_user (
-            id bigserial primary key,
-            program_id bigint references program(id),
-            user_id bigint references users(id),
-            last_order_number int not null,
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE program_user
+            (
+                id                bigserial primary key,
+                program_id        bigint references program (id),
+                user_id           bigint references users (id),
+                last_order_number int not null,
+                created_at        timestamp default current_timestamp,
+                updated_at        timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_program_workout" author="ilya">
         <sql>
-            CREATE TABLE program_workout (
-            id bigserial primary key,
-            program_id bigint references program(id),
-            workout_id bigint references workout(id),
-            order_number int not null,
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE program_workout
+            (
+                id           bigserial primary key,
+                program_id   bigint references program (id),
+                workout_id   bigint references workout (id),
+                order_number int not null,
+                created_at   timestamp default current_timestamp,
+                updated_at   timestamp default current_timestamp
             )
         </sql>
     </changeSet>
     <changeSet id="create_table_user_workout_exercise" author="ilya">
         <sql>
-            CREATE TABLE user_workout_exercise (
-            id bigserial primary key,
-            user_id bigint references users(id),
-            workout_exercise_id bigint references workout_exercise(id),
-            repeats int not null,
-            created_at timestamp default current_timestamp,
-            updated_at timestamp default current_timestamp
+            CREATE TABLE user_workout_exercise
+            (
+                id                  bigserial primary key,
+                user_id             bigint references users (id),
+                workout_exercise_id bigint references workout_exercise (id),
+                repeats             int not null,
+                created_at          timestamp default current_timestamp,
+                updated_at          timestamp default current_timestamp
             )
         </sql>
     </changeSet>

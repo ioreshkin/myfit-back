@@ -8,16 +8,28 @@
         "exerciseId": 1,
         "order": 1,
         "iterations": [
-          { "repeats": 10, "weight": 80.0 },
-          { "repeats": 8, "weight": 100.0 }
+          {
+            "repeats": 10,
+            "weight": 80.0
+          },
+          {
+            "repeats": 8,
+            "weight": 100.0
+          }
         ]
       },
       {
         "exerciseId": 2,
         "order": 2,
         "iterations": [
-          { "repeats": 15, "weight": 120.0 },
-          { "repeats": 12, "weight": 140.0 }
+          {
+            "repeats": 15,
+            "weight": 120.0
+          },
+          {
+            "repeats": 12,
+            "weight": 140.0
+          }
         ]
       }
     ],
@@ -37,17 +49,32 @@
         "exerciseId": 3,
         "order": 1,
         "iterations": [
-          { "repeats": 12, "weight": 60.0 },
-          { "repeats": 10, "weight": 80.0 }
+          {
+            "repeats": 12,
+            "weight": 60.0
+          },
+          {
+            "repeats": 10,
+            "weight": 80.0
+          }
         ]
       },
       {
         "exerciseId": 4,
         "order": 2,
         "iterations": [
-          { "repeats": 15, "weight": 12.0 },
-          { "repeats": 12, "weight": 14.0 },
-          { "repeats": 10, "weight": 16.0 }
+          {
+            "repeats": 15,
+            "weight": 12.0
+          },
+          {
+            "repeats": 12,
+            "weight": 14.0
+          },
+          {
+            "repeats": 10,
+            "weight": 16.0
+          }
         ]
       }
     ],

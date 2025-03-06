@@ -46,15 +46,17 @@ public class WorkoutControllerTest extends BaseWebIntegrationTest {
     MvcResult result =
         mockMvc
             .perform(get(BASE_URL).contentType(CONTENT_TYPE_JSON))
-            .andExpect(status().isOk()) .andExpect(status().isOk())
+            .andExpect(status().isOk())
+            .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andReturn();
 
-    String jsonResponse = new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
+    String jsonResponse = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
     List<WorkoutDto> actualWorkouts =
         objectMapper.readValue(jsonResponse, new TypeReference<>() {});
 
-    List<WorkoutDto> expectedWorkouts = ResourcePool.read(expected_workout_list, new TypeReference<>() {});
+    List<WorkoutDto> expectedWorkouts =
+        ResourcePool.read(expected_workout_list, new TypeReference<>() {});
 
     assertThat(actualWorkouts).usingRecursiveComparison().isEqualTo(expectedWorkouts);
   }

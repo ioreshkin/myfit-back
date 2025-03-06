@@ -19,4 +19,3 @@ public class WorkoutImage extends Image {
   @JoinColumn(name = "workout_id", referencedColumnName = "id")
   private Workout workout;
 }
-

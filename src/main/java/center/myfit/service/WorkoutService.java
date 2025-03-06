@@ -29,9 +29,7 @@ public class WorkoutService {
   private final WorkoutExerciseMapper workoutExerciseMapper;
   private final UserService userService;
 
-  /**
-   * Создание тренировки.
-   */
+  /** Создание тренировки. */
   @Transactional
   public WorkoutDto createWorkout(WorkoutDto dto) {
 
@@ -46,8 +44,8 @@ public class WorkoutService {
     log.info("сохранено воркаут, присвоен id{}", workout.toString());
 
     List<WorkoutExercise> workoutExercises = workoutExerciseMapper.map(dto, savedWorkout);
-    log.info("набор упражнений в тренировке готов к сохранению в бд{}",
-            workoutExercises.toString());
+    log.info(
+        "набор упражнений в тренировке готов к сохранению в бд{}", workoutExercises.toString());
     workoutExerciseRepository.saveAll(workoutExercises);
 
     return workoutMapper.map(savedWorkout, dto);
@@ -60,4 +58,3 @@ public class WorkoutService {
     return workoutRepository.findAllByOwner(user).stream().map(workoutExerciseMapper::map).toList();
   }
 }
-

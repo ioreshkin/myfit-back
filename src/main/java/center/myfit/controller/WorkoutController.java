@@ -1,6 +1,5 @@
 package center.myfit.controller;
 
-
 import center.myfit.service.WorkoutService;
 import center.myfit.starter.dto.WorkoutDto;
 import jakarta.validation.Valid;
@@ -26,8 +25,7 @@ public class WorkoutController {
   @PostMapping
   @PreAuthorize("hasRole('TUZ')")
   public WorkoutDto createWorkout(@RequestBody @Valid WorkoutDto dto) {
-    log.info("пришел WorkoutDto для сохранения {}",
-        dto.toString());
+    log.info("Получен запрос на создание тренировки {}", dto.toString());
     return workoutService.createWorkout(dto);
   }
 
