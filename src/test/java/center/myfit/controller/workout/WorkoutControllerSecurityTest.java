@@ -31,91 +31,93 @@ import org.springframework.test.web.servlet.MockMvc;
 @Transactional
 public class WorkoutControllerSecurityTest {
 
-    private static final String BASE_URL = API_PREFIX + "/workout";
-    private static final ObjectMapper mapper = new ObjectMapper();
+  private static final String BASE_URL = API_PREFIX + "/workout";
+  private static final ObjectMapper mapper = new ObjectMapper();
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private TuzProperties properties;
+  @Autowired private MockMvc mockMvc;
+  @Autowired private TuzProperties properties;
 
-    private static Stream<Arguments> badWorkoutDto() {
+  private static Stream<Arguments> badWorkoutDto() {
 
-        return Stream.of(
-                Arguments.of("null", getString(empty_workout)),
-                Arguments.of("nullTitle", getString(null_title_workout)),
-                Arguments.of("emptyTitle", getString(empty_title_workout)),
-                Arguments.of("spacesTitle", getString(spaces_title_workout)), // Пробелы в title
-                Arguments.of("shortTitle", getString(short_title_workout)),
-                Arguments.of("longTitle", getString(long_title_workout)),
-                Arguments.of("nullExercises", getString(null_exercises_workout)),
-                Arguments.of("emptyExercises", getString(empty_exercises_workout)),
-                Arguments.of("nullDescription", getString(null_description_workout)),
-                Arguments.of("emptyDescription", getString(empty_description_workout)),
-                Arguments.of("spacesDescription", getString(spaces_description_workout)));
-    }
+    return Stream.of(
+        Arguments.of("null", getString(empty_workout)),
+        Arguments.of("nullTitle", getString(null_title_workout)),
+        Arguments.of("emptyTitle", getString(empty_title_workout)),
+        Arguments.of("spacesTitle", getString(spaces_title_workout)), // Пробелы в title
+        Arguments.of("shortTitle", getString(short_title_workout)),
+        Arguments.of("longTitle", getString(long_title_workout)),
+        Arguments.of("nullExercises", getString(null_exercises_workout)),
+        Arguments.of("emptyExercises", getString(empty_exercises_workout)),
+        Arguments.of("nullDescription", getString(null_description_workout)),
+        Arguments.of("emptyDescription", getString(empty_description_workout)),
+        Arguments.of("spacesDescription", getString(spaces_description_workout)));
+  }
 
-    private static Stream<Arguments> badExerciseWorkoutForWorkoutDto() {
-        return Stream.of(
-                Arguments.of("nullExerciseId", getString(null_exercise_id)),
-                Arguments.of("nullIterations", getString(null_iterations)),
-                Arguments.of("emptyIterations", getString(empty_iterations))
-        );
-    }
+  private static Stream<Arguments> badExerciseWorkoutForWorkoutDto() {
+    return Stream.of(
+        Arguments.of("nullExerciseId", getString(null_exercise_id)),
+        Arguments.of("nullIterations", getString(null_iterations)),
+        Arguments.of("emptyIterations", getString(empty_iterations)));
+  }
 
-    private static Stream<Arguments> badIterationForExerciseWorkoutDTO() {
-        return Stream.of(
-                Arguments.of("nullRepeats", getString(null_repeats)),
-                Arguments.of("negativeRepeats", getString(negative_repeats)),
-                Arguments.of("nullWeight", getString(null_weight)),
-                Arguments.of("negativeWeight", getString(negative_weight))
-        );
-    }
+  private static Stream<Arguments> badIterationForExerciseWorkoutDTO() {
+    return Stream.of(
+        Arguments.of("nullRepeats", getString(null_repeats)),
+        Arguments.of("negativeRepeats", getString(negative_repeats)),
+        Arguments.of("nullWeight", getString(null_weight)),
+        Arguments.of("negativeWeight", getString(negative_weight)));
+  }
 
-    @Test
-    @Sql(scripts = {"/sql/test_user.sql", "/sql/test_exercises.sql"})
-    void createWorkout_shouldReturnCreatedWorkout() throws Exception {
-        mockMvc
-                .perform(
-                        post(BASE_URL)
-                                .with(httpBasic(properties.getUsername(), properties.getPassword()))
-                                .content(getString(create_workout))
-                                .contentType(CONTENT_TYPE_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", notNullValue()));
-    }
+  @Test
+  @Sql(scripts = {"/sql/test_user.sql", "/sql/test_exercises.sql"})
+  void createWorkout_shouldReturnCreatedWorkout() throws Exception {
+    mockMvc
+        .perform(
+            post(BASE_URL)
+                .with(httpBasic(properties.getUsername(), properties.getPassword()))
+                .content(getString(create_workout))
+                .contentType(CONTENT_TYPE_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", notNullValue()));
+  }
 
-    @Test
-    @Sql(value = "/sql/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    void createWorkout_withWrongUser_shouldReturnForbidden() throws Exception {
-        mockMvc
-                .perform(post(BASE_URL)
-                        .with(httpBasic(properties.getUsername(), properties.getPassword()))
-                        .content(getString(create_workout_wrong_keycloak_id))
-                        .contentType(APPLICATION_JSON))
-                .andExpect(status().isForbidden());
-    }
+  @Test
+  @Sql(value = "/sql/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  void createWorkout_withWrongUser_shouldReturnForbidden() throws Exception {
+    mockMvc
+        .perform(
+            post(BASE_URL)
+                .with(httpBasic(properties.getUsername(), properties.getPassword()))
+                .content(getString(create_workout_wrong_keycloak_id))
+                .contentType(APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
 
-    @Test
-    void createWorkout_shouldReturnUnauthorized_whenWrongPassword() throws Exception {
-        mockMvc
-                .perform(
-                        post(BASE_URL)
-                                .with(httpBasic(properties.getUsername(), "wrong"))
-                                .content(getString(create_workout))
-                                .contentType(APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
-    }
+  @Test
+  void createWorkout_shouldReturnUnauthorized_whenWrongPassword() throws Exception {
+    mockMvc
+        .perform(
+            post(BASE_URL)
+                .with(httpBasic(properties.getUsername(), "wrong"))
+                .content(getString(create_workout))
+                .contentType(APPLICATION_JSON))
+        .andExpect(status().isUnauthorized());
+  }
 
-    @ParameterizedTest(name = "{0}")
-    @MethodSource({"badWorkoutDto", "badExerciseWorkoutForWorkoutDto", "badIterationForExerciseWorkoutDTO"})
-    @Sql(value = "/sql/test_user.sql")
-    void createWorkout_shouldReturnBadRequest(String name, String value) throws Exception {
-        mockMvc
-                .perform(post(BASE_URL)
-                        .with(httpBasic(properties.getUsername(), properties.getPassword()))
-                        .content(value)
-                        .contentType(CONTENT_TYPE_JSON))
-                .andExpect(status().isBadRequest());
-    }
+  @ParameterizedTest(name = "{0}")
+  @MethodSource({
+    "badWorkoutDto",
+    "badExerciseWorkoutForWorkoutDto",
+    "badIterationForExerciseWorkoutDTO"
+  })
+  @Sql(value = "/sql/test_user.sql")
+  void createWorkout_shouldReturnBadRequest(String name, String value) throws Exception {
+    mockMvc
+        .perform(
+            post(BASE_URL)
+                .with(httpBasic(properties.getUsername(), properties.getPassword()))
+                .content(value)
+                .contentType(CONTENT_TYPE_JSON))
+        .andExpect(status().isBadRequest());
+  }
 }
