@@ -60,9 +60,9 @@ public class WorkoutExerciseMapper {
   /** Маппер для преобразования Workout в WorkoutDto. */
   public WorkoutDto map(Workout workout) {
     List<WorkoutDto.ExerciseWorkoutDto> exerciseWorkoutDtos = new ArrayList<>();
-    AtomicInteger orderCounter = new AtomicInteger(1); // Счётчик order для упражнений
+    AtomicInteger orderCounter = new AtomicInteger(1);
 
-    workoutExerciseRepository.findByWorkout(workout).stream()
+    workoutExerciseRepository.findByWorkoutOrderByOrders(workout).stream()
         .collect(Collectors.groupingBy(we -> we.getExercise().getId()))
         .forEach(
             (exerciseId, workoutExercises) -> {
