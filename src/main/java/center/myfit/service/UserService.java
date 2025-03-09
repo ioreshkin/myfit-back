@@ -15,12 +15,14 @@ import center.myfit.starter.exception.UnauthorizedException;
 import center.myfit.starter.service.UserAware;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /** Сервис работы с пользователями. */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -36,6 +38,7 @@ public class UserService {
   @Async
   public void createUser(EventDto dto) {
     if ("LOGIN".equals(dto.type()) && userRepository.existsByKeycloakId(dto.userId())) {
+      log.debug("Пользователь уже существует!");
       return;
     }
 
@@ -53,7 +56,8 @@ public class UserService {
     user.setKeycloakId(representation.getId());
     user.setInvite(invite);
 
-    userRepository.save(user);
+    User saved = userRepository.save(user);
+    log.info("Пользователь успешно создан. id = {}", saved.getId());
   }
 
   /** Подписка на тренера. */

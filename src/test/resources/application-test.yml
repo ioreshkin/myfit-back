@@ -10,6 +10,10 @@ spring:
         jwt.issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/myfit}
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        show_sql: true
+
   datasource:
     url: jdbc:h2:mem:test
     username: sa
@@ -21,3 +25,5 @@ logging:
     org:
       springframework:
         security: DEBUG
+      hibernate:
+        type: TRACE
