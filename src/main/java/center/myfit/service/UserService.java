@@ -45,7 +45,7 @@ public class UserService {
     int invite;
     do {
       invite = ThreadLocalRandom.current().nextInt(100000, 9999999);
-    } while (!userRepository.existsByInvite(invite));
+    } while (userRepository.existsByInvite(invite));
 
     UserRepresentation representation =
         keycloak.realm(properties.getRealm()).users().get(dto.userId()).toRepresentation();
@@ -57,7 +57,7 @@ public class UserService {
     user.setInvite(invite);
 
     User saved = userRepository.save(user);
-    log.info("Пользователь успешно создан. id = {}", saved.getId());
+    log.info("Новый пользователь успешно создан. id = {}", saved.getId());
   }
 
   /** Подписка на тренера. */
