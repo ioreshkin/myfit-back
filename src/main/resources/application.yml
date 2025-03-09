@@ -62,3 +62,7 @@ keycloak:
 tuz:
   username: ${TUZ_USER:tuz}
   password: ${TUZ_PASSWORD:password}
+
+logging:
+  level:
+    center.myfit: DEBUG

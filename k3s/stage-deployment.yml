@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: stage-myfit-back
-          image: "docker.fitcycle.ru/myfit:1.3-SNAPSHOT"
+          image: "docker.fitcycle.ru/myfit:1.4-SNAPSHOT"
           imagePullPolicy: Always
           ports:
             - name: http
@@ -51,6 +51,8 @@ spec:
           env:
             - name: SWAGGER_ENABLE
               value: "true"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "stage"
             - name: ISSUER_URI
               value: "https://auth.fitcycle.ru/realms/fitcycle-stage"
             - name: DB_URL
