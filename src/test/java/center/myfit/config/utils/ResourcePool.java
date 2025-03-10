@@ -22,6 +22,8 @@ public class ResourcePool extends AbstractTestResourcePool {
 
   public static final Resource create_workout =
       new ClassPathResource("json/workout/create-workout.json");
+  public static final Resource update_workout =
+          new ClassPathResource("json/workout/update-workout.json");
   public static final Resource create_workout_wrong_keycloak_id =
       new ClassPathResource("json/workout/create-workour-with-wrong_keycloak_id.json");
   public static final Resource empty_workout =
@@ -65,4 +67,7 @@ public class ResourcePool extends AbstractTestResourcePool {
 
   public static final Resource expected_workout_list =
       new ClassPathResource("json/workout/expected_workouts.json");
+  public static final Resource expected_update_workout =
+          new ClassPathResource("json/workout/expected-update-workout.json");
+
 }

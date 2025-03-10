@@ -1,3 +1,4 @@
+-- "/sql/test_user.sql",
 insert into users (id, first_name, last_name, email, keycloak_id, invite)
 values (1, 'first_name', 'last_name', 'test@test.com', 'keyclId', 123);
 

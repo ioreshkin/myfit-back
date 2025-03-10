@@ -1,3 +1,4 @@
+-- "/sql/test_workout_images.sql"
 -- Добавляем изображения в таблицу image
 INSERT INTO image (id, original, desktop, mobile, image_type)
 VALUES (1, 'https://minio/original-image-nogi.jpg', NULL, NULL, 'workout_image');

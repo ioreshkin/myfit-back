@@ -1,0 +1,45 @@
+{
+  "id": 2,
+  "keycloakId": "keyclId",
+  "title": "Обновлённая тренировка груди",
+  "exercises": [
+    {
+      "exerciseId": 5,
+      "order": 1,
+      "iterations": [
+        {
+          "repeats": 10,
+          "weight": 70.0
+        },
+        {
+          "repeats": 8,
+          "weight": 85.0
+        }
+      ]
+    },
+    {
+      "exerciseId": 4,
+      "order": 2,
+      "iterations": [
+        {
+          "repeats": 12,
+          "weight": 14.0
+        },
+        {
+          "repeats": 10,
+          "weight": 16.0
+        },
+        {
+          "repeats": 8,
+          "weight": 18.0
+        }
+      ]
+    }
+  ],
+  "description": "с акцентом на растяжку",
+  "image": {
+    "original": "https://minio/sisi.jpg",
+    "mobile": null,
+    "desktop": null
+  }
+}
