@@ -25,7 +25,4 @@ public class Workout extends BaseEntity {
   @OneToOne(mappedBy = "workout", cascade = CascadeType.ALL)
   private WorkoutImage image;
 
-//  @OneToMany(mappedBy = "workout")
-//  private List<WorkoutExercise> workoutExercises = new ArrayList<>(); // вроде он ничего не обязан знать о входящих в него воркаут ексерсайз
-
 }

@@ -17,31 +17,31 @@ VALUES (5, 'Жим гантелей', 'Жим гантелей лёжа', 'https
 
 -- Приседания в тренировке ног (2 подхода)
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (1, 1, 1, 10, 80.0, 1);
+VALUES (100, 1, 1, 10, 80.0, 1);
 
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (2, 1, 1, 8, 100.0, 2);
+VALUES (101, 1, 1, 8, 100.0, 2);
 
 -- Жим лёжа в тренировке груди (2 подхода)
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (3, 2, 3, 12, 60.0, 1);
+VALUES (102, 2, 3, 12, 60.0, 1);
 
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (4, 2, 3, 10, 80.0, 2);
+VALUES (103, 2, 3, 10, 80.0, 2);
 
 -- Жим ногами в тренировке ног (2 подхода)
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (5, 1, 2, 15, 120.0, 3);
+VALUES (104, 1, 2, 15, 120.0, 3);
 
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (6, 1, 2, 12, 140.0, 4);
+VALUES (105, 1, 2, 12, 140.0, 4);
 
 -- Разведение гантелей в тренировке груди (3 подхода)
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (7, 2, 4, 15, 12.0, 3);
+VALUES (106, 2, 4, 15, 12.0, 3);
 
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (8, 2, 4, 12, 14.0, 4);
+VALUES (107, 2, 4, 12, 14.0, 4);
 
 INSERT INTO workout_exercise (id, workout_id, exercise_id, repeats, weight, orders)
-VALUES (9, 2, 4, 10, 16.0, 5);
+VALUES (108, 2, 4, 10, 16.0, 5);

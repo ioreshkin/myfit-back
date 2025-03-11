@@ -72,12 +72,6 @@ public class WorkoutService {
     workout.setDescription(dto.description());
     log.info("название и описание обновили{}", workout);
 
-//todo это ниже никак не влияет  так как при deleteAllByWorkout(workout); хибер и так это понимает судя по запросам
- //   log.info("Удаляем связи WorkoutExercise на  упражнения и тренировки в рантайме из workout entity");
-//    workout.getWorkoutExercises().forEach(w -> {w.setWorkout(null);
-//      w.setExercise(null);});
-    //или
-    //workout.getWorkoutExercises().clear();  // по сути без раницы как убрать WorkoutExercises??
 
 
     log.info("Удаляем старые упражнения из тренировки из базы");
@@ -88,18 +82,12 @@ public class WorkoutService {
     log.info("лист тренировок создан в рантайме для  workout entity {}", workoutExercises.toString());
 
 
-//todo это ниже никак не влияет  так как при dworkoutExerciseRepository.saveAll(workoutExercises);  хибер и так это понимает судя по запросам
-    //log.info("сетим в сущность workout новые workoutExercises");
-   // workout.setWorkoutExercises(new ArrayList<>(workoutExercises));
-    //workout.getWorkoutExercises().addAll(workoutExercises);
-
 
     log.info("Сохраняем обновлённую тренировку");
     Workout updatedWorkout = workoutRepository.saveAndFlush(workout);
 
     log.info("сетим в базу новые workoutExercises");
-    workoutExerciseRepository.saveAll(workoutExercises);  // todo вот до сюда доходят запросы в базу и тут с индексом капец
-
+    workoutExerciseRepository.saveAllAndFlush(workoutExercises);
 
 
     WorkoutDto workoutDto = workoutMapper.map(updatedWorkout, dto);
