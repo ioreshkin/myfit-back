@@ -39,7 +39,7 @@ public class WorkoutController {
     return workoutService.updateWorkout(id, dto);
   }
 
-  /** Получить все трпенировки. */
+  /** Получить все тренировки. */
   @GetMapping
   public List<WorkoutDto> getAll() {
     return workoutService.getAll();

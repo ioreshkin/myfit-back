@@ -1,11 +1,11 @@
 {
-  "id": 2,
+  "id": 101,
   "keycloakId": "keyclId",
   "title": "Обновлённая тренировка груди",
   "description": "с акцентом на растяжку",
   "exercises": [
     {
-      "exerciseId": 5,
+      "exerciseId": 102,
       "order": 1,
       "iterations": [
         {
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "exerciseId": 4,
+      "exerciseId": 103,
       "order": 2,
       "iterations": [
         {
@@ -38,7 +38,7 @@
     }
   ],
   "image": {
-    "original": "https://minio/sisi.jpg",
+    "original": "https://minio/NewOriginal.jpg",
     "mobile": null,
     "desktop": null
   }

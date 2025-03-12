@@ -1,29 +1,11 @@
 package center.myfit.controller.workout;
 
-import static center.myfit.config.utils.ResourcePool.*;
-import static center.myfit.config.utils.TestConstants.*;
-import static center.myfit.starter.test.AbstractTestResourcePool.getString;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import center.myfit.config.TuzProperties;
 import center.myfit.config.utils.ResourcePool;
-import center.myfit.entity.Workout;
 import center.myfit.repository.WorkoutRepository;
 import center.myfit.starter.dto.WorkoutDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,6 +18,22 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Stream;
+
+import static center.myfit.config.utils.ResourcePool.*;
+import static center.myfit.config.utils.TestConstants.API_PREFIX;
+import static center.myfit.config.utils.TestConstants.CONTENT_TYPE_JSON;
+import static center.myfit.starter.test.AbstractTestResourcePool.getString;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -97,41 +95,33 @@ public class WorkoutControllerSecurityTest {
 
   @Test
   @Sql(
-          scripts = {
-                  "/sql/test_user.sql",
-                  "/sql/test_workouts.sql",
-                  "/sql/test_workout_exercises.sql",
-                  "/sql/test_workout_images.sql"
-          }
-  )
+      scripts = {
+        "/sql/forUpdate/test_user_forUpdate.sql",
+        "/sql/forUpdate/test_workouts_forUpdate.sql",
+        "/sql/forUpdate/test_workout_exercises_forUpdate.sql",
+        "/sql/forUpdate/test_workout_images_forUpdate.sql"
+      })
   void updateWorkout_shouldReturnUpdatedWorkout() throws Exception {
-    // Подготовка данных
     String updateWorkoutJson = getString(update_workout);
 
-
-    // Выполнение запроса на обновление
-    MvcResult result = mockMvc
+    MvcResult result =
+        mockMvc
             .perform(
-                    put(BASE_URL + "/2")
-                            .with(httpBasic(properties.getUsername(), properties.getPassword()))
-                            .content(updateWorkoutJson)
-                            .contentType(CONTENT_TYPE_JSON))
+                put(BASE_URL + "/101")
+                    .with(httpBasic(properties.getUsername(), properties.getPassword()))
+                    .content(updateWorkoutJson)
+                    .contentType(CONTENT_TYPE_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id").value(2))
+            .andExpect(jsonPath("$.id").value(101))
             .andReturn();
-
 
     String jsonResponse = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
     WorkoutDto actualWorkout = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
-    WorkoutDto expectedWorkout = ResourcePool.read(expected_update_workout, new TypeReference<>() {});
+    WorkoutDto expectedWorkout =
+        ResourcePool.read(expected_update_workout, new TypeReference<>() {});
 
     assertThat(actualWorkout).usingRecursiveComparison().isEqualTo(expectedWorkout);
-
   }
-
-
-
-
 
   @Test
   @Sql(value = "/sql/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
