@@ -1,12 +1,14 @@
 package center.myfit.service;
 
-import center.myfit.entity.*;
+import center.myfit.entity.User;
+import center.myfit.entity.Workout;
+import center.myfit.entity.WorkoutExercise;
+import center.myfit.entity.WorkoutImage;
 import center.myfit.exception.NotFoundException;
 import center.myfit.mapper.WorkoutExerciseMapper;
 import center.myfit.mapper.WorkoutMapper;
 import center.myfit.repository.WorkoutExerciseRepository;
 import center.myfit.repository.WorkoutRepository;
-import center.myfit.starter.dto.ExerciseImageDto;
 import center.myfit.starter.dto.WorkoutDto;
 import center.myfit.starter.dto.WorkoutImageDto;
 import center.myfit.starter.service.UserAware;
@@ -97,10 +99,10 @@ public class WorkoutService {
   /** Обновить у тренировки ссылки на изображения. */
   public void updateWorkoutImage(WorkoutImageDto dto) {
     Workout workout =
-            workoutRepository.findById(dto.workoutId())
+        workoutRepository
+            .findById(dto.workoutId())
             .orElseThrow(
-                    () ->
-                            new NotFoundException("Workout with id = " + dto.workoutId() + "not found"));
+                () -> new NotFoundException("Workout with id = " + dto.workoutId() + "not found"));
     workout.getImage().setMobile(dto.image().mobile());
     workout.getImage().setDesktop(dto.image().desktop());
     workoutRepository.save(workout);

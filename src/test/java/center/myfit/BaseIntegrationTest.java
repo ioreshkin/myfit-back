@@ -1,6 +1,7 @@
 package center.myfit;
 
 import center.myfit.repository.ExerciseRepository;
+import center.myfit.repository.WorkoutRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -9,4 +10,5 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 public abstract class BaseIntegrationTest {
   @SpyBean protected ExerciseRepository exerciseRepository;
+  @SpyBean protected WorkoutRepository workoutRepository;
 }

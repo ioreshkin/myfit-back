@@ -1,6 +1,5 @@
 package center.myfit.listener;
 
-import center.myfit.entity.WorkoutImage;
 import center.myfit.service.ExerciseService;
 import center.myfit.service.WorkoutService;
 import center.myfit.starter.dto.ExerciseImageDto;
