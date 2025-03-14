@@ -47,7 +47,6 @@ public class WorkoutControllerSecurityTest {
 
   @Autowired private MockMvc mockMvc;
   @Autowired private TuzProperties properties;
-  @Autowired private WorkoutRepository workoutRepository;
 
   private static Stream<Arguments> badWorkoutDto() {
 

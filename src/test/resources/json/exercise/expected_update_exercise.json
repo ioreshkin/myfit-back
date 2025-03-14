@@ -1,0 +1,12 @@
+{
+  "id": 101,
+  "keycloakId": "keyclId",
+  "title": "Updated Squat",
+  "description": "Updated squat description",
+  "videoUrl": "https://example.com/updated-video.mp4",
+  "image": {
+    "original": "https://minio/NewOriginal.jpg",
+    "mobile": "https://minio/NewMobile.jpg",
+    "desktop": "https://minio/NewDesktop.jpg"
+  }
+}

@@ -35,7 +35,7 @@ public class WorkoutController {
   @PutMapping("/{id}")
   @PreAuthorize("hasRole('TUZ')")
   public WorkoutDto updateWorkout(@PathVariable Long id, @RequestBody @Valid WorkoutDto dto) {
-    log.info("СТЕП 1Получен запрос на обновление тренировки id={}, данные: {}", id, dto);
+    log.info("Получен запрос на обновление тренировки id={}, данные: {}", id, dto);
     return workoutService.updateWorkout(id, dto);
   }
 

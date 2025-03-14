@@ -2,7 +2,9 @@ package center.myfit.controller.exercise;
 
 import static center.myfit.config.utils.ResourcePool.*;
 import static center.myfit.config.utils.TestConstants.API_PREFIX;
+import static center.myfit.config.utils.TestConstants.CONTENT_TYPE_JSON;
 import static center.myfit.starter.test.AbstractTestResourcePool.read;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,9 +16,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import center.myfit.config.TuzProperties;
+import center.myfit.config.utils.ResourcePool;
 import center.myfit.entity.Exercise;
 import center.myfit.repository.ExerciseRepository;
+import center.myfit.starter.dto.ExerciseDto;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +39,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,6 +48,8 @@ import org.springframework.test.web.servlet.MockMvc;
 public class ExerciseControllerSecurityTest {
 
   private final String BASE_URL = API_PREFIX + "/exercise";
+  private final ObjectMapper objectMapper = new ObjectMapper();
+
 
   @Autowired private MockMvc mockMvc;
   @Autowired private TuzProperties properties;
@@ -83,6 +94,35 @@ public class ExerciseControllerSecurityTest {
         () -> assertNull(exercise.getImage().getMobile()),
         () -> assertNull(exercise.getImage().getDesktop()));
   }
+
+  @Test
+  @Sql(
+          scripts = {
+                  "/sql/forUpdate/test_user_forUpdate.sql",
+                  "/sql/forUpdate/test_exercises_forUpdate.sql",
+                  "/sql/forUpdate/test_exercise_images_forUpdate.sql"
+          })
+  void updateExercise_shouldReturnUpdatedExercise() throws Exception {
+    String updateExerciseJson = getString(update_exercise);
+
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            put(BASE_URL + "/101")
+                                    .with(httpBasic(properties.getUsername(), properties.getPassword()))
+                                    .content(updateExerciseJson)
+                                    .contentType(CONTENT_TYPE_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    String jsonResponse = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    ExerciseDto actualExercise = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
+    ExerciseDto expectedExercise =
+            ResourcePool.read(expected_update_exercise, new TypeReference<>() {});
+
+    assertThat(actualExercise).usingRecursiveComparison().isEqualTo(expectedExercise);
+  }
+
 
   @Test
   @Sql(value = "/sql/test_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
