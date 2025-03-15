@@ -51,6 +51,8 @@ spec:
           env:
             - name: SWAGGER_ENABLE
               value: "true"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "stage"
             - name: ISSUER_URI
               value: "https://auth.fitcycle.ru/realms/fitcycle-stage"
             - name: DB_URL

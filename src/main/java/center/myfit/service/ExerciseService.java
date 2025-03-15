@@ -76,8 +76,12 @@ public class ExerciseService {
             .orElseThrow(
                 () ->
                     new RuntimeException(
-                        "упражнение не найдено или " + "не принадлежит пользователю"));
-    log.info("упражнение нашли        {}", exercise);
+                        "упражнение не найдено или не принадлежит пользователю"));
+    log.info("упражнение нашли {}", exercise);
+
+    exercise.setTitle(dto.title());
+    exercise.setDescription(dto.description());
+    exercise.setVideoUrl(dto.videoUrl());
 
     ExerciseImage exerciseImage = exercise.getImage();
     if (exerciseImage == null) {
