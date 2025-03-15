@@ -13,7 +13,7 @@ spring:
     properties:
       hibernate:
         show_sql: true
-
+        format_sql: true
   datasource:
     url: jdbc:h2:mem:test
     username: sa
@@ -25,5 +25,3 @@ logging:
     org:
       springframework:
         security: DEBUG
-      hibernate:
-        type: TRACE

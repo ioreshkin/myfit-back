@@ -24,4 +24,5 @@ public class Workout extends BaseEntity {
 
   @OneToOne(mappedBy = "workout", cascade = CascadeType.ALL)
   private WorkoutImage image;
+
 }

@@ -13,6 +13,17 @@ public interface ExerciseMapper {
   /** Получение ExerciseDto. */
   ExerciseDto map(Exercise exercise);
 
+  /** Получение ExerciseDto. */
+  @Mapping(target = "id", source = "exercise.id")
+  @Mapping(target = "keycloakId", source = "dto.keycloakId")
+  @Mapping(target = "title", source = "dto.title")
+  @Mapping(target = "description", source = "dto.description")
+  @Mapping(target = "videoUrl", source = "dto.videoUrl")
+  @Mapping(target = "image", source = "dto.image")
+  ExerciseDto map(Exercise exercise, ExerciseDto dto);
+
+
+
   /** Получение Exercise для создания нового. */
   @Mapping(target = "id", source = "exercise.id")
   @Mapping(target = "owner", source = "owner")

@@ -1,3 +1,4 @@
+-- "/sql/test_workouts.sql",
 insert into workout (id, title, description, owner_id, image_id)
 values (1, 'Тренировка ног', 'с прогрессией', 1, 1);
 

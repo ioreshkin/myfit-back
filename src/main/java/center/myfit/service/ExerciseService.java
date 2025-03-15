@@ -2,6 +2,7 @@ package center.myfit.service;
 
 import center.myfit.dto.UserWorkoutExerciseDto;
 import center.myfit.entity.Exercise;
+import center.myfit.entity.ExerciseImage;
 import center.myfit.entity.User;
 import center.myfit.entity.UserWorkoutExercise;
 import center.myfit.entity.WorkoutExercise;
@@ -13,11 +14,14 @@ import center.myfit.repository.WorkoutExerciseRepository;
 import center.myfit.starter.dto.ExerciseDto;
 import center.myfit.starter.dto.ExerciseImageDto;
 import center.myfit.starter.service.UserAware;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /** Сервис работы с упражнениями. */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ExerciseService {
@@ -57,6 +61,42 @@ public class ExerciseService {
     uwe.setUser(user);
     uwe.setWorkoutExercise(workoutExercise);
     userWorkoutExerciseRepository.save(uwe);
+  }
+
+  /** Обновление упражнения. */
+  @Transactional
+  public ExerciseDto updateExercise(ExerciseDto dto) {
+    log.info("проверяем аутентифицирован ли пользователь");
+    User user = userService.getUser(dto.keycloakId());
+
+    log.info("ищем существующее упражнение  с id={} для пользователя {}", dto.id(), user);
+    Exercise exercise =
+        exerciseRepository
+            .findByIdAndOwner(dto.id(), user)
+            .orElseThrow(
+                () ->
+                    new RuntimeException(
+                        "упражнение не найдено или не принадлежит пользователю"));
+    log.info("упражнение нашли {}", exercise);
+
+    exercise.setTitle(dto.title());
+    exercise.setDescription(dto.description());
+    exercise.setVideoUrl(dto.videoUrl());
+
+    ExerciseImage exerciseImage = exercise.getImage();
+    if (exerciseImage == null) {
+      exerciseImage = new ExerciseImage();
+      exerciseImage.setExercise(exercise);
+    }
+    exerciseImage.setOriginal(dto.image().original());
+    exerciseImage.setDesktop(dto.image().desktop());
+    exerciseImage.setMobile(dto.image().mobile());
+    exercise.setImage(exerciseImage);
+
+    Exercise updatedExercise = exerciseRepository.saveAndFlush(exercise);
+
+
+    return exerciseMapper.map(updatedExercise, dto);
   }
 
   /** Обновить у упражнения ссылки на изображения. */

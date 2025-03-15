@@ -6,8 +6,10 @@ import static org.mockito.Mockito.verify;
 
 import center.myfit.BaseIntegrationTest;
 import center.myfit.entity.Exercise;
+import center.myfit.entity.Workout;
 import center.myfit.exception.NotFoundException;
 import center.myfit.starter.dto.ExerciseImageDto;
+import center.myfit.starter.dto.WorkoutImageDto;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,6 +21,7 @@ import org.springframework.test.context.jdbc.Sql;
 class FilesListenerTest extends BaseIntegrationTest {
   @Autowired FilesListener filesListener;
   @Captor ArgumentCaptor<Exercise> captor;
+  @Captor ArgumentCaptor<Workout> workoutCaptor;
 
   @Test
   @Sql(scripts = {"/sql/test_user.sql", "/sql/test_exercise_image.sql"})
@@ -44,5 +47,31 @@ class FilesListenerTest extends BaseIntegrationTest {
             1L, new ExerciseImageDto.ImageDto("originalUrl", "mobileUrl", "desktopUrl"));
     assertThrows(
         NotFoundException.class, () -> filesListener.handleExerciseImage(exerciseImageDto));
+  }
+
+  @Test
+  @Sql(scripts = {"/sql/test_user.sql", "/sql/test_workout_image.sql"})
+  void handleWorkoutImage_shouldRunSuccess() {
+    WorkoutImageDto workoutImageDto =
+            new WorkoutImageDto(
+                    2L, new WorkoutImageDto.ImageDto("originalUrl", "mobileUrl", "desktopUrl"));
+    filesListener.handleWorkoutImage(workoutImageDto);
+
+    verify(workoutRepository).save(workoutCaptor.capture());
+
+    Workout workout = workoutCaptor.getValue();
+
+    assertEquals(workoutImageDto.image().mobile(), workout.getImage().getMobile());
+    assertEquals(workoutImageDto.image().desktop(), workout.getImage().getDesktop());
+    assertEquals(workoutImageDto.image().original(), workout.getImage().getOriginal());
+  }
+
+  @Test
+  void handleWorkoutImage_shouldThrow_whenWorkoutNotFound() {
+    WorkoutImageDto workoutImageDto =
+            new WorkoutImageDto(
+                    2L, new WorkoutImageDto.ImageDto("originalUrl", "mobileUrl", "desktopUrl"));
+    assertThrows(
+            NotFoundException.class, () -> filesListener.handleWorkoutImage(workoutImageDto));
   }
 }
