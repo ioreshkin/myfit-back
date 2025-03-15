@@ -65,14 +65,14 @@ public class ExerciseService {
 
   /** Обновление упражнения. */
   @Transactional
-  public ExerciseDto updateExercise(Long id, ExerciseDto dto) {
+  public ExerciseDto updateExercise(ExerciseDto dto) {
     log.info("проверяем аутентифицирован ли пользователь");
     User user = userService.getUser(dto.keycloakId());
 
-    log.info("ищем существующее упражнение  с id={} для пользователя {}", id, user);
+    log.info("ищем существующее упражнение  с id={} для пользователя {}", dto.id(), user);
     Exercise exercise =
         exerciseRepository
-            .findByIdAndOwner(id, user)
+            .findByIdAndOwner(dto.id(), user)
             .orElseThrow(
                 () ->
                     new RuntimeException(

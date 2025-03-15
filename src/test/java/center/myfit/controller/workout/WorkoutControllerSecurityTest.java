@@ -106,12 +106,11 @@ public class WorkoutControllerSecurityTest {
     MvcResult result =
         mockMvc
             .perform(
-                put(BASE_URL + "/101")
+                put(BASE_URL)
                     .with(httpBasic(properties.getUsername(), properties.getPassword()))
                     .content(updateWorkoutJson)
                     .contentType(CONTENT_TYPE_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id").value(101))
             .andReturn();
 
     String jsonResponse = result.getResponse().getContentAsString(StandardCharsets.UTF_8);

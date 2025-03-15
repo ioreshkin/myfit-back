@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /** Контроллер тренировок. */
 @RestController
@@ -32,11 +32,11 @@ public class WorkoutController {
   }
 
   /** Обновление тренировки. */
-  @PutMapping("/{id}")
+  @PutMapping
   @PreAuthorize("hasRole('TUZ')")
-  public WorkoutDto updateWorkout(@PathVariable Long id, @RequestBody @Valid WorkoutDto dto) {
-    log.info("Получен запрос на обновление тренировки id={}, данные: {}", id, dto);
-    return workoutService.updateWorkout(id, dto);
+  public WorkoutDto updateWorkout(@RequestBody @Valid WorkoutDto dto) {
+    log.info("Получен запрос на обновление тренировки id={}, данные: {}", dto.id(), dto);
+    return workoutService.updateWorkout(dto);
   }
 
   /** Получить все тренировки. */

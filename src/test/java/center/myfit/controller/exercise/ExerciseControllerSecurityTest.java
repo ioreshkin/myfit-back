@@ -108,7 +108,7 @@ public class ExerciseControllerSecurityTest {
     MvcResult result =
             mockMvc
                     .perform(
-                            put(BASE_URL + "/101")
+                            put(BASE_URL)
                                     .with(httpBasic(properties.getUsername(), properties.getPassword()))
                                     .content(updateExerciseJson)
                                     .contentType(CONTENT_TYPE_JSON))
